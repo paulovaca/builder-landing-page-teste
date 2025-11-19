@@ -81,6 +81,7 @@ export interface VideoBlockProps {
   visibleOn: VisibilityConfig;
   id?: string;
   className?: string;
+  disablePlayerInteractions?: boolean;
 }
 
 export function VideoBlock({
@@ -107,6 +108,7 @@ export function VideoBlock({
   visibleOn,
   id,
   className,
+  disablePlayerInteractions = false,
 }: VideoBlockProps) {
   const resolvedUrl = url || DEFAULT_VIDEO_URL;
   const {
@@ -176,7 +178,7 @@ export function VideoBlock({
             title={title}
             width="100%"
             height="100%"
-            style={{ border: 0, pointerEvents: 'none' }}
+            style={{ border: 0, pointerEvents: disablePlayerInteractions ? 'none' : undefined }}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
           />
         ) : (
@@ -191,14 +193,14 @@ export function VideoBlock({
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              pointerEvents: 'none',
+              pointerEvents: disablePlayerInteractions ? 'none' : 'auto',
             }}
             onPlay={onPlay}
             onEnded={onEnded}
           />
         )}
 
-        {showPlayIndicator && (
+        {showPlayIndicator && disablePlayerInteractions && (
           <div
             style={{
               position: 'absolute',
