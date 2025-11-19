@@ -2,10 +2,15 @@ import * as LucideIcons from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 import React from 'react';
 
-import type { ColorValue } from '@/lib/site-renderer/types';
+import type {
+  BorderValue,
+  ColorValue,
+  SpacingValue,
+  VisibilityConfig,
+} from '@/lib/site-renderer/types';
 import type { TrackingConfig } from '@/lib/tracking/types';
 
-import { colorValueToCss } from './utils';
+import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 
 export type IconName = keyof typeof LucideIcons;
 
@@ -23,6 +28,8 @@ export const SIZE_OPTIONS = [
 
 export type ButtonVariant = (typeof VARIANT_OPTIONS)[number]['value'];
 export type ButtonSize = (typeof SIZE_OPTIONS)[number]['value'];
+
+export type ButtonShadow = 'none' | 'soft' | 'medium' | 'strong';
 
 const alignmentToCssValue: Record<
   'left' | 'center' | 'right',
@@ -42,6 +49,13 @@ const SIZE_STYLE_MAP: Record<ButtonSize, { fontSize: string; paddingY: number }>
 const resolveIcon = (name: IconName): React.ComponentType<LucideProps> =>
   (LucideIcons[name] ?? LucideIcons.ArrowRight) as React.ComponentType<LucideProps>;
 
+const BUTTON_SHADOW_MAP: Record<ButtonShadow, string> = {
+  none: 'none',
+  soft: 'var(--shadow-sm)',
+  medium: 'var(--shadow-md)',
+  strong: 'var(--shadow-lg)',
+};
+
 export interface ButtonBlockProps {
   label: string;
   href: string;
@@ -55,11 +69,19 @@ export interface ButtonBlockProps {
   textColor: ColorValue;
   showIcon: boolean;
   iconName: IconName;
-  showShadow: boolean;
+  border: BorderValue;
+  shadow: ButtonShadow;
   tracking?: TrackingConfig;
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
   onClick?: (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  id?: string;
+  className?: string;
 }
 
 export function ButtonBlock({
@@ -75,16 +97,25 @@ export function ButtonBlock({
   textColor,
   showIcon,
   iconName,
-  showShadow,
+  border,
+  shadow,
   tracking,
   innerRef,
   wrapperProps,
   onClick,
+  margin,
+  padding,
+  width,
+  height,
+  visibleOn,
+  id,
+  className,
 }: ButtonBlockProps) {
   const backgroundCss = colorValueToCss(background);
   const textColorCss = colorValueToCss(textColor);
   const sizeStyle = SIZE_STYLE_MAP[size] ?? SIZE_STYLE_MAP.md;
   const Icon = resolveIcon(iconName);
+  const customBorder = borderValueToCss(border);
 
   const buttonStyle: React.CSSProperties = (() => {
     const base: React.CSSProperties = {
@@ -100,12 +131,12 @@ export function ButtonBlock({
       textDecoration: 'none',
       transition: 'var(--transition-base)',
       width: fullWidth ? '100%' : 'auto',
-      border: 'none',
-      boxShadow: showShadow ? 'var(--shadow-md)' : 'none',
+      border: customBorder !== 'none' ? customBorder : 'none',
+      boxShadow: BUTTON_SHADOW_MAP[shadow],
       minHeight: '48px',
     };
 
-    if (variant === 'outline') {
+    if (variant === 'outline' && customBorder === 'none') {
       return {
         ...base,
         background: 'transparent',
@@ -114,7 +145,7 @@ export function ButtonBlock({
       };
     }
 
-    if (variant === 'ghost') {
+    if (variant === 'ghost' && customBorder === 'none') {
       return {
         ...base,
         background: 'rgba(13, 153, 255, 0.08)',
@@ -130,17 +161,49 @@ export function ButtonBlock({
     };
   })();
 
+  const {
+    style: wrapperStyle,
+    className: wrapperClassName,
+    id: wrapperId,
+    ...restWrapperProps
+  } = wrapperProps ?? {};
+
   const containerStyle: React.CSSProperties = {
     display: 'flex',
-    width: '100%',
+    width: width || '100%',
     justifyContent: alignmentToCssValue[alignment] ?? 'center',
+    margin: spacingValueToCss(margin),
+    padding: spacingValueToCss(padding),
   };
+
+  if (height && height !== 'auto') {
+    containerStyle.height = height;
+    containerStyle.minHeight = height;
+  }
+
+  const combinedClassName =
+    [wrapperClassName, className?.trim()].filter(Boolean).join(' ') || undefined;
+  const combinedStyle = {
+    ...containerStyle,
+    ...(wrapperStyle ?? {}),
+  };
+  const sanitizedId = (id || wrapperId)?.trim() || undefined;
 
   const hasLink = Boolean(href && href.trim().length > 0);
   const Tag: 'a' | 'button' = hasLink ? 'a' : 'button';
 
   return (
-    <div ref={innerRef} style={containerStyle} data-block-type="cta-button" {...wrapperProps}>
+    <div
+      ref={innerRef}
+      style={combinedStyle}
+      data-block-type="cta-button"
+      data-visible-desktop={visibleOn.desktop ? 'true' : 'false'}
+      data-visible-tablet={visibleOn.tablet ? 'true' : 'false'}
+      data-visible-mobile={visibleOn.mobile ? 'true' : 'false'}
+      id={sanitizedId}
+      className={combinedClassName}
+      {...restWrapperProps}
+    >
       <Tag
         id={tracking?.customId || undefined}
         className={tracking?.customClass || undefined}

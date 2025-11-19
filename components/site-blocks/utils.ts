@@ -49,6 +49,9 @@ export const spacingValueToCss = (value?: SpacingValue, unit: string = 'px') =>
 export const spacingSummary = (value?: SpacingValue, unit: string = 'px') =>
   spacingValueToCss(value, unit);
 
+export const isZeroSpacingValue = (value?: SpacingValue) =>
+  spacingValueToArray(value).every((size) => size === 0);
+
 export const borderValueToCss = (border?: BorderValue) => {
   if (!border || border.width <= 0 || border.style === 'none') {
     return 'none';

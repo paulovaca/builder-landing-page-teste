@@ -1,8 +1,13 @@
 import React from 'react';
 
-import type { BorderValue, ColorValue, SpacingValue } from '@/lib/site-renderer/types';
+import type {
+  BorderValue,
+  ColorValue,
+  SpacingValue,
+  VisibilityConfig,
+} from '@/lib/site-renderer/types';
 
-import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
+import { borderValueToCss, colorValueToCss, isZeroSpacingValue, spacingValueToCss } from './utils';
 
 export type ContainerDirection = 'row' | 'column';
 export type ContainerShadow = 'none' | 'soft' | 'medium';
@@ -30,6 +35,12 @@ export interface ContainerBlockProps {
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
   showEmptyState?: boolean;
+  margin: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  id?: string;
+  className?: string;
 }
 
 export function ContainerBlock({
@@ -49,11 +60,16 @@ export function ContainerBlock({
   innerRef,
   wrapperProps,
   showEmptyState = false,
+  margin,
+  width,
+  height,
+  visibleOn,
+  id,
+  className,
 }: ContainerBlockProps) {
-  const style: React.CSSProperties = {
-    width: '100%',
+  const containerStyle: React.CSSProperties = {
+    width: width || '100%',
     maxWidth: centerContent ? maxWidth || '1200px' : '100%',
-    margin: centerContent ? '0 auto' : undefined,
     display: 'flex',
     flexDirection: direction,
     flexWrap: wrap ? 'wrap' : 'nowrap',
@@ -68,8 +84,43 @@ export function ContainerBlock({
     minHeight: '80px',
   };
 
+  if (height && height !== 'auto') {
+    containerStyle.height = height;
+    containerStyle.minHeight = height;
+  }
+
+  const computedMargin =
+    centerContent && isZeroSpacingValue(margin) ? '0 auto' : spacingValueToCss(margin);
+
+  const {
+    style: wrapperStyle,
+    className: wrapperClassName,
+    id: wrapperId,
+    ...restWrapperProps
+  } = wrapperProps ?? {};
+
+  const combinedStyle: React.CSSProperties = {
+    margin: computedMargin,
+    ...containerStyle,
+    ...(wrapperStyle ?? {}),
+  };
+
+  const combinedClassName =
+    [wrapperClassName, className?.trim()].filter(Boolean).join(' ') || undefined;
+  const sanitizedId = (id || wrapperId)?.trim() || undefined;
+
   return (
-    <div ref={innerRef} style={style} data-block-type="container" {...wrapperProps}>
+    <div
+      ref={innerRef}
+      style={combinedStyle}
+      data-block-type="container"
+      data-visible-desktop={visibleOn.desktop ? 'true' : 'false'}
+      data-visible-tablet={visibleOn.tablet ? 'true' : 'false'}
+      data-visible-mobile={visibleOn.mobile ? 'true' : 'false'}
+      id={sanitizedId}
+      className={combinedClassName}
+      {...restWrapperProps}
+    >
       {children ||
         (showEmptyState ? (
           <p

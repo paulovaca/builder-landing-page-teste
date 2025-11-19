@@ -1,9 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 
-import type { ColorValue, ImageSEOConfig } from '@/lib/site-renderer/types';
+import type {
+  BorderValue,
+  ColorValue,
+  ImageSEOConfig,
+  SpacingValue,
+  VisibilityConfig,
+} from '@/lib/site-renderer/types';
 
-import { colorValueToCss } from './utils';
+import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 
 export type ImageObjectFit = 'cover' | 'contain' | 'fill' | 'scale-down';
 export type ImageShadow = 'none' | 'soft' | 'medium';
@@ -35,6 +41,13 @@ export interface ImageBlockProps {
   seo?: ImageSEOConfig;
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  visibleOn: VisibilityConfig;
+  id?: string;
+  className?: string;
 }
 
 export function ImageBlock({
@@ -54,15 +67,41 @@ export function ImageBlock({
   openInNewTab,
   innerRef,
   wrapperProps,
+  margin,
+  padding,
+  background,
+  border,
+  visibleOn,
+  id,
+  className,
 }: ImageBlockProps) {
   const hasLink = Boolean(linkHref && linkHref.trim().length > 0);
   const resolvedSrc = src || DEFAULT_IMAGE;
+
+  const {
+    style: wrapperStyle,
+    className: wrapperClassName,
+    id: wrapperId,
+    ...restWrapperProps
+  } = wrapperProps ?? {};
 
   const containerStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: alignment,
     width: '100%',
+    margin: spacingValueToCss(margin),
+    padding: spacingValueToCss(padding),
+    background: colorValueToCss(background),
+    border: borderValueToCss(border),
+    borderRadius,
+    boxShadow: SHADOW_MAP[shadow],
+    ...(wrapperStyle ?? {}),
   };
+
+  if (height && height !== 'auto') {
+    containerStyle.height = height;
+    containerStyle.minHeight = height;
+  }
 
   const figureStyle: React.CSSProperties = {
     width: width || '100%',
@@ -72,7 +111,6 @@ export function ImageBlock({
     overflow: 'hidden',
     padding: showFrame ? 'var(--spacing-sm)' : 0,
     background: showFrame ? colorValueToCss(frameColor) : 'transparent',
-    boxShadow: SHADOW_MAP[shadow],
   };
 
   const imageElement = (
@@ -104,8 +142,22 @@ export function ImageBlock({
     </figure>
   );
 
+  const combinedClassName =
+    [wrapperClassName, className?.trim()].filter(Boolean).join(' ') || undefined;
+  const sanitizedId = (id || wrapperId)?.trim() || undefined;
+
   return (
-    <div ref={innerRef} style={containerStyle} data-block-type="image" {...wrapperProps}>
+    <div
+      ref={innerRef}
+      style={containerStyle}
+      data-block-type="image"
+      data-visible-desktop={visibleOn.desktop ? 'true' : 'false'}
+      data-visible-tablet={visibleOn.tablet ? 'true' : 'false'}
+      data-visible-mobile={visibleOn.mobile ? 'true' : 'false'}
+      id={sanitizedId}
+      className={combinedClassName}
+      {...restWrapperProps}
+    >
       {hasLink ? (
         <a
           href={linkHref}

@@ -1,6 +1,11 @@
 import React from 'react';
 
-import type { BorderValue, ColorValue, SpacingValue } from '@/lib/site-renderer/types';
+import type {
+  BorderValue,
+  ColorValue,
+  SpacingValue,
+  VisibilityConfig,
+} from '@/lib/site-renderer/types';
 
 import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 
@@ -27,6 +32,12 @@ export interface CardBlockProps {
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
   showEmptyState?: boolean;
+  margin: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  id?: string;
+  className?: string;
 }
 
 export function CardBlock({
@@ -43,8 +54,14 @@ export function CardBlock({
   innerRef,
   wrapperProps,
   showEmptyState = false,
+  margin,
+  width,
+  height,
+  visibleOn,
+  id,
+  className,
 }: CardBlockProps) {
-  const style: React.CSSProperties = {
+  const baseStyle: React.CSSProperties = {
     background: colorValueToCss(background),
     padding: spacingValueToCss(padding),
     borderRadius,
@@ -53,15 +70,46 @@ export function CardBlock({
     display: 'flex',
     flexDirection: 'column',
     gap: `${gap}px`,
-    width: '100%',
+    width: width || '100%',
     maxWidth: maxWidth || '100%',
     alignItems,
     justifyContent,
     minHeight: '120px',
   };
 
+  if (height && height !== 'auto') {
+    baseStyle.height = height;
+    baseStyle.minHeight = height;
+  }
+
+  const {
+    style: wrapperStyle,
+    className: wrapperClassName,
+    id: wrapperId,
+    ...restWrapperProps
+  } = wrapperProps ?? {};
+
+  const combinedStyle: React.CSSProperties = {
+    margin: spacingValueToCss(margin),
+    ...baseStyle,
+    ...(wrapperStyle ?? {}),
+  };
+  const combinedClassName =
+    [wrapperClassName, className?.trim()].filter(Boolean).join(' ') || undefined;
+  const sanitizedId = (id || wrapperId)?.trim() || undefined;
+
   return (
-    <div ref={innerRef} style={style} data-block-type="card" {...wrapperProps}>
+    <div
+      ref={innerRef}
+      style={combinedStyle}
+      data-block-type="card"
+      data-visible-desktop={visibleOn.desktop ? 'true' : 'false'}
+      data-visible-tablet={visibleOn.tablet ? 'true' : 'false'}
+      data-visible-mobile={visibleOn.mobile ? 'true' : 'false'}
+      id={sanitizedId}
+      className={combinedClassName}
+      {...restWrapperProps}
+    >
       {children ||
         (showEmptyState ? (
           <p

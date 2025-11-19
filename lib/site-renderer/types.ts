@@ -13,6 +13,12 @@ export type ColorValue = string | GradientValue;
 
 export type SpacingValue = number | [number, number, number, number];
 
+export type VisibilityConfig = {
+  desktop: boolean;
+  tablet: boolean;
+  mobile: boolean;
+};
+
 export type BorderStyleOption = 'none' | 'solid' | 'dashed' | 'dotted' | 'double';
 
 export type BorderValue = {

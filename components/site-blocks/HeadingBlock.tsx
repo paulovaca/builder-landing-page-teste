@@ -1,11 +1,23 @@
 import React from 'react';
 
-import { colorValueToCss } from '@/components/site-blocks/utils';
-import type { ColorValue, HeadingSEOConfig } from '@/lib/site-renderer/types';
+import {
+  borderValueToCss,
+  colorValueToCss,
+  spacingValueToCss,
+} from '@/components/site-blocks/utils';
+import type {
+  BorderValue,
+  ColorValue,
+  HeadingSEOConfig,
+  SpacingValue,
+  VisibilityConfig,
+} from '@/lib/site-renderer/types';
 
 export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
 export type HeadingWeight = 'regular' | 'medium' | 'bold';
+
+export type HeadingShadow = 'none' | 'soft' | 'medium';
 
 export interface HeadingBlockProps {
   text: string;
@@ -18,6 +30,17 @@ export interface HeadingBlockProps {
   emphasis: boolean;
   weight: HeadingWeight;
   seo?: HeadingSEOConfig;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: HeadingShadow;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  id?: string;
+  className?: string;
 }
 
 const LEVEL_STYLES: Record<HeadingLevel, { fontSize: string; lineHeight: number }> = {
@@ -33,6 +56,12 @@ const WEIGHT_MAP: Record<HeadingWeight, number> = {
   regular: 500,
   medium: 600,
   bold: 700,
+};
+
+const HEADING_SHADOW_MAP: Record<HeadingShadow, string> = {
+  none: 'none',
+  soft: 'var(--shadow-sm)',
+  medium: 'var(--shadow-md)',
 };
 
 export type HeadingBlockRenderContent = (text: string) => React.ReactNode;
@@ -56,6 +85,17 @@ export function HeadingBlock({
   renderContent,
   innerRef,
   wrapperProps,
+  margin,
+  padding,
+  background,
+  border,
+  borderRadius,
+  shadow,
+  width,
+  height,
+  visibleOn,
+  id,
+  className,
 }: HeadingBlockViewProps) {
   const typography = LEVEL_STYLES[level] ?? LEVEL_STYLES.h2;
 
@@ -83,8 +123,45 @@ export function HeadingBlock({
 
   const tagName: HeadingLevel = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(level) ? level : 'h2';
 
+  const {
+    style: wrapperStyle,
+    className: wrapperClassName,
+    id: wrapperId,
+    ...restWrapperProps
+  } = wrapperProps ?? {};
+
+  const containerStyle: React.CSSProperties = {
+    margin: spacingValueToCss(margin),
+    padding: spacingValueToCss(padding),
+    background: colorValueToCss(background),
+    border: borderValueToCss(border),
+    borderRadius,
+    boxShadow: HEADING_SHADOW_MAP[shadow],
+    width: width || '100%',
+    ...(wrapperStyle ?? {}),
+  };
+
+  if (height && height !== 'auto') {
+    containerStyle.height = height;
+    containerStyle.minHeight = height;
+  }
+
+  const combinedClassName =
+    [wrapperClassName, className?.trim()].filter(Boolean).join(' ') || undefined;
+  const sanitizedId = (id || wrapperId)?.trim() || undefined;
+
   return (
-    <div ref={innerRef} data-block-type="heading" {...wrapperProps}>
+    <div
+      ref={innerRef}
+      data-block-type="heading"
+      data-visible-desktop={visibleOn.desktop ? 'true' : 'false'}
+      data-visible-tablet={visibleOn.tablet ? 'true' : 'false'}
+      data-visible-mobile={visibleOn.mobile ? 'true' : 'false'}
+      style={containerStyle}
+      id={sanitizedId}
+      className={combinedClassName}
+      {...restWrapperProps}
+    >
       {React.createElement(
         tagName,
         { style: { textAlign: align } },

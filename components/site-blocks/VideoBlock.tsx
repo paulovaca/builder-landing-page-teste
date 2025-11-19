@@ -1,9 +1,14 @@
 import React, { useMemo } from 'react';
 
-import type { ColorValue } from '@/lib/site-renderer/types';
+import type {
+  BorderValue,
+  ColorValue,
+  SpacingValue,
+  VisibilityConfig,
+} from '@/lib/site-renderer/types';
 import type { TrackingConfig } from '@/lib/tracking/types';
 
-import { colorValueToCss } from './utils';
+import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 import { getYouTubeEmbedUrl } from '@/lib/embed/youtube';
 
 export type VideoShadow = 'none' | 'soft';
@@ -70,6 +75,12 @@ export interface VideoBlockProps {
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
   onPlay?: () => void;
   onEnded?: () => void;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  border: BorderValue;
+  visibleOn: VisibilityConfig;
+  id?: string;
+  className?: string;
 }
 
 export function VideoBlock({
@@ -90,18 +101,50 @@ export function VideoBlock({
   wrapperProps,
   onPlay,
   onEnded,
+  margin,
+  padding,
+  border,
+  visibleOn,
+  id,
+  className,
 }: VideoBlockProps) {
   const resolvedUrl = url || DEFAULT_VIDEO_URL;
+  const {
+    style: wrapperStyle,
+    className: wrapperClassName,
+    id: wrapperId,
+    ...restWrapperProps
+  } = wrapperProps ?? {};
+
   const containerStyle: React.CSSProperties = {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    margin: spacingValueToCss(margin),
+    padding: spacingValueToCss(padding),
+    background: colorValueToCss(background),
+    border: borderValueToCss(border),
+    borderRadius,
+    boxShadow: SHADOW_MAP[shadow],
+    ...(wrapperStyle ?? {}),
+  };
+
+  const playerStyle: React.CSSProperties = {
     width: width || '100%',
     height,
     maxWidth: '100%',
     borderRadius,
     overflow: 'hidden',
-    boxShadow: SHADOW_MAP[shadow],
-    background: colorValueToCss(background),
     position: 'relative',
+    background: colorValueToCss(background),
   };
+  if (height && height !== 'auto') {
+    containerStyle.minHeight = height;
+  }
+
+  const combinedClassName =
+    [wrapperClassName, className?.trim()].filter(Boolean).join(' ') || undefined;
+  const sanitizedId = (id || wrapperId)?.trim() || undefined;
 
   const isEmbed = isYouTubeUrl(resolvedUrl) || isVimeoUrl(resolvedUrl);
   const embedUrl = useMemo(
@@ -117,11 +160,16 @@ export function VideoBlock({
   return (
     <div
       ref={innerRef}
-      style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+      style={containerStyle}
       data-block-type="video"
-      {...wrapperProps}
+      data-visible-desktop={visibleOn.desktop ? 'true' : 'false'}
+      data-visible-tablet={visibleOn.tablet ? 'true' : 'false'}
+      data-visible-mobile={visibleOn.mobile ? 'true' : 'false'}
+      id={sanitizedId}
+      className={combinedClassName}
+      {...restWrapperProps}
     >
-      <div style={containerStyle}>
+      <div style={playerStyle}>
         {isEmbed ? (
           <iframe
             src={embedUrl}
