@@ -1,4 +1,6 @@
-const nodes = {
+import type { SerializedNodesMap } from '@/lib/site-renderer/types';
+
+const nodes: SerializedNodesMap = {
   ROOT: {
     type: {
       resolvedName: 'Container',
@@ -8,6 +10,7 @@ const nodes = {
       'node-text-default',
       'node-button-default',
       'xtk9wLK5vv',
+      'tpFcxTXFyl',
       'kQXhwJ0n03',
       'EX1G8ly3Ar',
       'iZk3VjrWX2',
@@ -206,7 +209,7 @@ const nodes = {
       href: 'https://meusite.com/cta',
       size: 'md',
       text: 'Clique aqui',
-      label: 'Chamar para ação',
+      label: ' ação',
       width: '100%',
       border: {
         color: 'var(--color-border)',
@@ -373,6 +376,48 @@ const nodes = {
     parent: 'xtk9wLK5vv',
     isCanvas: false,
     displayName: 'Título',
+    linkedNodes: {},
+  },
+  tpFcxTXFyl: {
+    type: {
+      resolvedName: 'Video',
+    },
+    nodes: [],
+    props: {
+      id: '',
+      url: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
+      loop: false,
+      muted: true,
+      title: 'Apresentação em vídeo',
+      width: '100%',
+      border: {
+        color: 'var(--color-border)',
+        style: 'none',
+        width: 0,
+      },
+      height: '360px',
+      margin: 0,
+      poster:
+        'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80',
+      shadow: 'soft',
+      padding: 0,
+      autoPlay: false,
+      controls: true,
+      className: '',
+      visibleOn: {
+        mobile: true,
+        tablet: true,
+        desktop: true,
+      },
+      background: '#000000',
+      borderRadius: 24,
+      showPlayIndicator: true,
+    },
+    custom: {},
+    hidden: false,
+    parent: 'ROOT',
+    isCanvas: false,
+    displayName: 'Vídeo',
     linkedNodes: {},
   },
   xtk9wLK5vv: {
@@ -546,6 +591,6 @@ const nodes = {
     displayName: 'Título',
     linkedNodes: {},
   },
-} as const;
+};
 
 export default nodes;

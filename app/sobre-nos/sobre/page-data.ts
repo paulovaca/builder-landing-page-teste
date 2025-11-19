@@ -1,4 +1,6 @@
-const nodes = {
+import type { SerializedNodesMap } from '@/lib/site-renderer/types';
+
+const nodes: SerializedNodesMap = {
   ROOT: {
     type: {
       resolvedName: 'Container',
@@ -173,6 +175,6 @@ const nodes = {
     displayName: 'Título',
     linkedNodes: {},
   },
-} as const;
+};
 
 export default nodes;
