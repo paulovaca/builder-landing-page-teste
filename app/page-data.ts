@@ -39,7 +39,7 @@ const nodes = {
         angle: 90,
         stops: [
           {
-            color: '#ff0000',
+            color: '#99a03b',
             position: 25,
           },
           {
@@ -230,6 +230,7 @@ const nodes = {
         desktop: true,
       },
       background: '#0d99ff',
+      showShadow: true,
       borderRadius: 999,
       openInNewTab: false,
     },
@@ -336,12 +337,12 @@ const nodes = {
     props: {
       id: '',
       seo: {
-        text: 'Apresente o principal benefício com um título impactante.',
+        text: 'Título a  a  a  a',
         level: 'h2',
       },
-      text: 'Título',
+      text: 'Título a  a  a  a',
       align: 'left',
-      color: 'var(--color-text-primary)',
+      color: 'rgba(13, 153, 255, 1.00)',
       level: 'h2',
       width: '100%',
       border: {
@@ -365,7 +366,7 @@ const nodes = {
       },
       background: 'transparent',
       borderRadius: 0,
-      spacingBelow: 16,
+      spacingBelow: 0,
     },
     custom: {},
     hidden: false,
@@ -381,7 +382,7 @@ const nodes = {
     nodes: ['B76HqjafSf', 'q8PU0fX-7S', 'mqGp0zW22V', 'kH5TNz3bZV'],
     props: {
       id: '',
-      gap: 16,
+      gap: 23,
       width: '100%',
       border: {
         color: '#2f4589',
@@ -392,15 +393,15 @@ const nodes = {
       margin: 0,
       shadow: 'strong',
       padding: 32,
-      maxWidth: '640px',
+      maxWidth: '250px',
       className: '',
       visibleOn: {
         mobile: true,
         tablet: true,
         desktop: true,
       },
-      alignItems: 'stretch',
-      background: 'rgba(57, 132, 99, 1.00)',
+      alignItems: 'flex-start',
+      background: 'rgba(57, 132, 99, 0.54)',
       borderRadius: 23,
       justifyContent: 'flex-start',
     },
