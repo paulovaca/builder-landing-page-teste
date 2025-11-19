@@ -75,7 +75,6 @@ export const useTracking = ({
       }
 
       if (debug) {
-        // eslint-disable-next-line no-console
         console.info('[tracking]', event.name, payload);
       }
     },

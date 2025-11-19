@@ -17,7 +17,10 @@ function renderNode(id: string, nodes: SerializedNodesMap): React.ReactNode {
   }
 
   const resolvedName = node.type?.resolvedName;
-  const resolverMap = siteRuntimeResolver as Record<string, React.ComponentType<any>>;
+  const resolverMap = siteRuntimeResolver as unknown as Record<
+    string,
+    React.ComponentType<Record<string, unknown>>
+  >;
   const Component = resolvedName ? resolverMap[resolvedName] : null;
   if (!Component) {
     return null;

@@ -1,6 +1,6 @@
 import * as LucideIcons from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import type {
   BorderValue,
@@ -114,7 +114,10 @@ export function ButtonBlock({
   const backgroundCss = colorValueToCss(background);
   const textColorCss = colorValueToCss(textColor);
   const sizeStyle = SIZE_STYLE_MAP[size] ?? SIZE_STYLE_MAP.md;
-  const Icon = resolveIcon(iconName);
+  const iconElement = useMemo(() => {
+    const Component = resolveIcon(iconName);
+    return React.createElement(Component, { size: 20 });
+  }, [iconName]);
   const customBorder = borderValueToCss(border);
 
   const buttonStyle: React.CSSProperties = (() => {
@@ -216,7 +219,7 @@ export function ButtonBlock({
         data-tracking-event={tracking?.event.name || undefined}
       >
         <span>{label}</span>
-        {showIcon && <Icon size={20} />}
+        {showIcon && iconElement}
       </Tag>
     </div>
   );
