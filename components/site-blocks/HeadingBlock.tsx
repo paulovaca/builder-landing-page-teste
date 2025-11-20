@@ -29,6 +29,7 @@ export interface HeadingBlockProps {
   uppercase: boolean;
   emphasis: boolean;
   weight: HeadingWeight;
+  fontSize: number;
   seo?: HeadingSEOConfig;
   margin: SpacingValue;
   padding: SpacingValue;
@@ -82,6 +83,7 @@ export function HeadingBlock({
   uppercase,
   emphasis,
   weight,
+  fontSize,
   renderContent,
   innerRef,
   wrapperProps,
@@ -97,14 +99,28 @@ export function HeadingBlock({
   id,
   className,
 }: HeadingBlockViewProps) {
-  const typography = LEVEL_STYLES[level] ?? LEVEL_STYLES.h2;
+  const baseTypography = LEVEL_STYLES[level] ?? LEVEL_STYLES.h2;
+  const resolvedFontSize =
+    typeof fontSize === 'number' && !Number.isNaN(fontSize)
+      ? Math.max(14, Math.min(160, fontSize))
+      : parseInt(baseTypography.fontSize, 10);
+  const resolvedLineHeight =
+    typeof fontSize === 'number' && !Number.isNaN(fontSize)
+      ? Math.max(
+          1,
+          Math.min(
+            2,
+            (baseTypography.lineHeight * resolvedFontSize) / parseInt(baseTypography.fontSize, 10),
+          ),
+        )
+      : baseTypography.lineHeight;
 
   const headingStyle: React.CSSProperties = {
     margin: 0,
     color: colorValueToCss(color),
     textAlign: align,
-    fontSize: typography.fontSize,
-    lineHeight: typography.lineHeight,
+    fontSize: `${resolvedFontSize}px`,
+    lineHeight: resolvedLineHeight,
     maxWidth: maxWidth || '100%',
     fontWeight: WEIGHT_MAP[weight],
     textTransform: uppercase ? 'uppercase' : undefined,

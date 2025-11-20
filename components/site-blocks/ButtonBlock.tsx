@@ -20,14 +20,7 @@ export const VARIANT_OPTIONS = [
   { value: 'ghost', label: 'Texto destacado' },
 ] as const;
 
-export const SIZE_OPTIONS = [
-  { value: 'sm', label: 'Pequeno' },
-  { value: 'md', label: 'Médio' },
-  { value: 'lg', label: 'Grande' },
-] as const;
-
 export type ButtonVariant = (typeof VARIANT_OPTIONS)[number]['value'];
-export type ButtonSize = (typeof SIZE_OPTIONS)[number]['value'];
 
 export type ButtonShadow = 'none' | 'soft' | 'medium' | 'strong';
 
@@ -38,12 +31,6 @@ const alignmentToCssValue: Record<
   left: 'flex-start',
   center: 'center',
   right: 'flex-end',
-};
-
-const SIZE_STYLE_MAP: Record<ButtonSize, { fontSize: string; paddingY: number }> = {
-  sm: { fontSize: '14px', paddingY: 10 },
-  md: { fontSize: '16px', paddingY: 14 },
-  lg: { fontSize: '18px', paddingY: 18 },
 };
 
 const resolveIcon = (name: IconName): React.ComponentType<LucideProps> =>
@@ -61,7 +48,7 @@ export interface ButtonBlockProps {
   href: string;
   openInNewTab: boolean;
   variant: ButtonVariant;
-  size: ButtonSize;
+  textSize: number;
   fullWidth: boolean;
   alignment: 'left' | 'center' | 'right';
   borderRadius: number;
@@ -89,7 +76,7 @@ export function ButtonBlock({
   href,
   openInNewTab,
   variant,
-  size,
+  textSize,
   fullWidth,
   alignment,
   borderRadius,
@@ -113,18 +100,22 @@ export function ButtonBlock({
 }: ButtonBlockProps) {
   const backgroundCss = colorValueToCss(background);
   const textColorCss = colorValueToCss(textColor);
-  const sizeStyle = SIZE_STYLE_MAP[size] ?? SIZE_STYLE_MAP.md;
+  const resolvedTextSize = Math.max(10, Math.min(200, Number(textSize) || 16));
+  const paddingY = Math.max(8, Math.round(resolvedTextSize * 0.6));
+  const paddingX = Math.max(paddingY * 2, Math.round(resolvedTextSize * 1.2));
   const iconElement = useMemo(() => {
     const Component = resolveIcon(iconName);
-    return React.createElement(Component, { size: 20 });
-  }, [iconName]);
+    return React.createElement(Component, {
+      size: Math.min(32, Math.max(12, Math.round(resolvedTextSize * 0.9))),
+    });
+  }, [iconName, resolvedTextSize]);
   const customBorder = borderValueToCss(border);
 
   const buttonStyle: React.CSSProperties = (() => {
     const base: React.CSSProperties = {
       borderRadius,
-      padding: `${sizeStyle.paddingY}px ${sizeStyle.paddingY * 2}px`,
-      fontSize: sizeStyle.fontSize,
+      padding: `${paddingY}px ${paddingX}px`,
+      fontSize: `${resolvedTextSize}px`,
       fontWeight: 600,
       display: 'inline-flex',
       alignItems: 'center',
@@ -136,7 +127,7 @@ export function ButtonBlock({
       width: fullWidth ? '100%' : 'auto',
       border: customBorder !== 'none' ? customBorder : 'none',
       boxShadow: BUTTON_SHADOW_MAP[shadow],
-      minHeight: '48px',
+      minHeight: `${Math.max(36, resolvedTextSize + paddingY * 2)}px`,
     };
 
     if (variant === 'outline' && customBorder === 'none') {

@@ -17,7 +17,6 @@ import type { TrackingConfig } from '@/lib/tracking/types';
 
 export type LinkVariant = 'accent' | 'muted' | 'primary';
 export type LinkUnderline = 'always' | 'hover' | 'none';
-export type LinkSize = 'sm' | 'md';
 export type LinkShadow = 'none' | 'soft' | 'strong';
 
 export const LINK_VARIANT_STYLES: Record<LinkVariant, React.CSSProperties> = {
@@ -38,11 +37,6 @@ export const LINK_HOVER_DECORATION: Record<LinkUnderline, string | undefined> = 
   none: undefined,
 };
 
-export const LINK_SIZE_STYLE: Record<LinkSize, React.CSSProperties> = {
-  sm: { fontSize: '14px', gap: 'var(--spacing-xs)' },
-  md: { fontSize: '16px', gap: 'var(--spacing-sm)' },
-};
-
 const LINK_SHADOW_MAP: Record<LinkShadow, string> = {
   none: 'none',
   soft: 'var(--shadow-sm)',
@@ -56,7 +50,7 @@ export interface LinkBlockProps {
   variant: LinkVariant;
   underline: LinkUnderline;
   showIcon: boolean;
-  size: LinkSize;
+  textSize: number;
   alignment: 'left' | 'center' | 'right';
   iconSize: number;
   tracking?: TrackingConfig;
@@ -84,7 +78,7 @@ export function LinkBlock({
   variant,
   underline,
   showIcon,
-  size,
+  textSize,
   alignment,
   iconSize,
   tracking,
@@ -105,9 +99,12 @@ export function LinkBlock({
 }: LinkBlockProps) {
   const hasLink = Boolean(href && href.trim().length > 0);
 
+  const resolvedTextSize = Math.max(10, Math.min(120, Number(textSize) || 16));
+
   const linkStyle: React.CSSProperties = {
     ...LINK_VARIANT_STYLES[variant],
-    ...LINK_SIZE_STYLE[size],
+    fontSize: `${resolvedTextSize}px`,
+    gap: `${Math.max(4, Math.round(resolvedTextSize * 0.35))}px`,
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',

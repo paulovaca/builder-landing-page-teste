@@ -21,16 +21,6 @@ const ALIGNMENT_MAP: Record<IconBlockProps['alignment'], React.CSSProperties['ju
   right: 'flex-end',
 };
 
-export const ICON_SIZE_DEFINITIONS: Record<
-  IconBlockProps['size'],
-  { label: string; size: number }
-> = {
-  sm: { label: 'Pequeno (24px)', size: 24 },
-  md: { label: 'Médio (32px)', size: 32 },
-  lg: { label: 'Grande (48px)', size: 48 },
-  xl: { label: 'Gigante (64px)', size: 64 },
-} as const;
-
 const resolveIconComponent = (iconName: string): LucideIconComponent => {
   const component = LucideIcons[iconName as keyof typeof LucideIcons];
   if (component) {
@@ -41,7 +31,7 @@ const resolveIconComponent = (iconName: string): LucideIconComponent => {
 
 export function IconBlock({
   iconName,
-  size,
+  iconSize,
   color,
   alignment,
   background,
@@ -58,7 +48,7 @@ export function IconBlock({
   id,
   className,
 }: IconBlockProps) {
-  const resolvedSize = ICON_SIZE_DEFINITIONS[size]?.size ?? ICON_SIZE_DEFINITIONS.md.size;
+  const resolvedSize = Math.max(8, Math.min(256, Number(iconSize) || 32));
   const iconColor = colorValueToCss(color);
   const iconElement = useMemo(() => {
     const Component = resolveIconComponent(iconName || 'Star');

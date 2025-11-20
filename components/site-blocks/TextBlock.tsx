@@ -21,6 +21,7 @@ export interface TextBlockProps {
   padding: SpacingValue;
   lineHeight: number;
   fontWeight: TextWeight;
+  textSize: number;
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
   renderContent?: (text: string) => React.ReactNode;
@@ -62,6 +63,7 @@ export function TextBlock({
   padding,
   lineHeight,
   fontWeight,
+  textSize,
   innerRef,
   wrapperProps,
   renderContent,
@@ -76,11 +78,16 @@ export function TextBlock({
   id,
   className,
 }: TextBlockProps) {
+  const resolvedFontSize =
+    typeof textSize === 'number' && !Number.isNaN(textSize)
+      ? Math.max(10, Math.min(120, textSize))
+      : parseInt(TEXT_VARIANT_STYLES[variant].fontSize, 10);
+
   const textStyle: React.CSSProperties = {
     margin: 0,
     color: colorValueToCss(color),
     textAlign: align,
-    fontSize: TEXT_VARIANT_STYLES[variant].fontSize,
+    fontSize: `${resolvedFontSize}px`,
     lineHeight: lineHeight.toString(),
     fontWeight: TEXT_FONT_WEIGHT_MAP[fontWeight],
     maxWidth: maxWidth || '100%',

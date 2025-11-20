@@ -92,15 +92,13 @@ export type SerializedNode = {
 
 export type SerializedNodesMap = Record<string, SerializedNode>;
 
-export type IconSizeOption = 'sm' | 'md' | 'lg' | 'xl';
-
 export type IconAlignment = 'left' | 'center' | 'right';
 
 export type IconShadow = 'none' | 'soft' | 'medium' | 'strong';
 
 export interface IconBlockProps {
   iconName: string;
-  size: IconSizeOption;
+  iconSize: number;
   color: ColorValue;
   alignment: IconAlignment;
   background: ColorValue;
@@ -145,6 +143,100 @@ export interface DividerBlockProps {
   orientation: 'horizontal' | 'vertical';
   alignment: DividerAlignment;
   margin: SpacingValue;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
+export type BadgeSize = 'sm' | 'md' | 'lg';
+export type BadgeVariant = 'solid' | 'outline' | 'soft';
+
+export interface BadgeBlockProps {
+  text: string;
+  variant: BadgeVariant;
+  textSize: number;
+  background: ColorValue;
+  textColor: ColorValue;
+  borderRadius: number;
+  padding?: SpacingValue;
+  margin: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
+export type VideoShadow = 'none' | 'soft';
+export type TextWeightOption = 'regular' | 'medium' | 'semibold' | 'bold';
+export type TextAlignOption = 'left' | 'center' | 'right' | 'justify';
+export type TextTransformOption = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+
+export interface VideoBlockProps {
+  url: string;
+  title: string;
+  poster?: string;
+  width: string;
+  height: string;
+  playerHeight: string;
+  playerAspectRatio: string;
+  borderRadius: number;
+  autoPlay: boolean;
+  controls: boolean;
+  loop: boolean;
+  muted: boolean;
+  showPlayIndicator: boolean;
+  shadow: VideoShadow;
+  background: ColorValue;
+  tracking?: unknown;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  onPlay?: () => void;
+  onEnded?: () => void;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  border: BorderValue;
+  visibleOn: VisibilityConfig;
+  id?: string;
+  className?: string;
+  disablePlayerInteractions?: boolean;
+}
+
+export type ListMarkerType = 'bullet' | 'number' | 'icon' | 'check';
+
+export type ListShadow = 'none' | 'soft' | 'medium';
+
+export type ListItem = {
+  id: string;
+  text: string;
+};
+
+export interface ListBlockProps {
+  items: ListItem[];
+  markerType: ListMarkerType;
+  markerIcon: string;
+  markerColor: ColorValue;
+  textColor: ColorValue;
+  textSize: number;
+  fontFamily: string;
+  fontWeight: TextWeightOption;
+  lineHeight: number;
+  letterSpacing: number;
+  textAlign: TextAlignOption;
+  textTransform?: TextTransformOption;
+  itemSpacing: number;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: ListShadow;
+  width: string;
+  height: string;
   visibleOn: VisibilityConfig;
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;

@@ -1,13 +1,6 @@
 import React, { useMemo } from 'react';
 
-import type {
-  BorderValue,
-  ColorValue,
-  SpacingValue,
-  VisibilityConfig,
-} from '@/lib/site-renderer/types';
-import type { TrackingConfig } from '@/lib/tracking/types';
-
+import type { VideoBlockProps } from '@/lib/site-renderer/types';
 import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 import { getYouTubeEmbedUrl } from '@/lib/embed/youtube';
 
@@ -56,40 +49,14 @@ const buildEmbedUrl = (
   return url;
 };
 
-export interface VideoBlockProps {
-  url: string;
-  title: string;
-  poster?: string;
-  width: string;
-  height: string;
-  borderRadius: number;
-  autoPlay: boolean;
-  controls: boolean;
-  loop: boolean;
-  muted: boolean;
-  showPlayIndicator: boolean;
-  shadow: VideoShadow;
-  background: ColorValue;
-  tracking?: TrackingConfig;
-  innerRef?: React.Ref<HTMLDivElement>;
-  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
-  onPlay?: () => void;
-  onEnded?: () => void;
-  margin: SpacingValue;
-  padding: SpacingValue;
-  border: BorderValue;
-  visibleOn: VisibilityConfig;
-  id?: string;
-  className?: string;
-  disablePlayerInteractions?: boolean;
-}
-
 export function VideoBlock({
   url,
   title,
   poster,
   width,
   height,
+  playerHeight,
+  playerAspectRatio,
   borderRadius,
   autoPlay,
   controls,
@@ -118,8 +85,28 @@ export function VideoBlock({
     ...restWrapperProps
   } = wrapperProps ?? {};
 
+  const resolvedPlayerHeight =
+    playerHeight && playerHeight.trim() !== ''
+      ? playerHeight
+      : height && height.trim() !== ''
+        ? height
+        : 'auto';
+  const resolvedAspectRatio = playerAspectRatio?.trim() || '16/9';
+  const [ratioW, ratioH] = resolvedAspectRatio.split('/').map((p) => Number(p.trim()) || 0);
+  const aspectRatioNumber = ratioW > 0 && ratioH > 0 ? ratioW / ratioH : 16 / 9;
+  const numericPlayerHeight = parseFloat(
+    typeof resolvedPlayerHeight === 'string' ? resolvedPlayerHeight : '0',
+  );
+  const computedPlayerWidth =
+    resolvedPlayerHeight !== 'auto' && Number.isFinite(numericPlayerHeight)
+      ? `${Math.round(numericPlayerHeight * aspectRatioNumber)}px`
+      : '100%';
+
+  const resolvedContainerWidth =
+    width && width.trim() !== '' && width.trim() !== 'auto' ? width : computedPlayerWidth;
+
   const containerStyle: React.CSSProperties = {
-    width: '100%',
+    width: resolvedContainerWidth,
     display: 'flex',
     justifyContent: 'center',
     margin: spacingValueToCss(margin),
@@ -132,8 +119,8 @@ export function VideoBlock({
   };
 
   const playerStyle: React.CSSProperties = {
-    width: width || '100%',
-    height,
+    width: computedPlayerWidth,
+    height: resolvedPlayerHeight,
     maxWidth: '100%',
     borderRadius,
     overflow: 'hidden',
@@ -141,6 +128,7 @@ export function VideoBlock({
     background: colorValueToCss(background),
   };
   if (height && height !== 'auto') {
+    containerStyle.height = height;
     containerStyle.minHeight = height;
   }
 
