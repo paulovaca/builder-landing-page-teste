@@ -7,5 +7,6 @@ export { ContainerRuntime } from './Container';
 export { CardRuntime } from './Card';
 export { LinkRuntime } from './Link';
 export { ImageRuntime } from './Image';
+export { IconRuntime } from './Icon';
 export { VideoRuntime } from './Video';
 export { CraftRenderer } from './CraftRenderer';

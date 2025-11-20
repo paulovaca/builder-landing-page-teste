@@ -1,3 +1,5 @@
+import type React from 'react';
+
 export type GradientStop = {
   color: string;
   position: number; // 0-100
@@ -89,3 +91,29 @@ export type SerializedNode = {
 };
 
 export type SerializedNodesMap = Record<string, SerializedNode>;
+
+export type IconSizeOption = 'sm' | 'md' | 'lg' | 'xl';
+
+export type IconAlignment = 'left' | 'center' | 'right';
+
+export type IconShadow = 'none' | 'soft' | 'medium' | 'strong';
+
+export interface IconBlockProps {
+  iconName: string;
+  size: IconSizeOption;
+  color: ColorValue;
+  alignment: IconAlignment;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: IconShadow;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}

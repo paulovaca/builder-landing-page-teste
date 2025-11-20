@@ -5,6 +5,7 @@ import { CardRuntime } from './Card';
 import { ContainerRuntime } from './Container';
 import { HeadingRuntime } from './Heading';
 import { ImageRuntime } from './Image';
+import { IconRuntime } from './Icon';
 import { LinkRuntime } from './Link';
 import { TextRuntime } from './Text';
 import { VideoRuntime } from './Video';
@@ -14,6 +15,7 @@ export const siteRuntimeResolver = {
   Text: TextRuntime,
   Button: ButtonRuntime,
   Image: ImageRuntime,
+  Icon: IconRuntime,
   Heading: HeadingRuntime,
   Link: LinkRuntime,
   Card: CardRuntime,
