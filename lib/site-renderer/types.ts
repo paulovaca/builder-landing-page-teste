@@ -133,3 +133,21 @@ export interface SpacerBlockProps {
   id?: string;
   className?: string;
 }
+
+export type DividerAlignment = 'left' | 'center' | 'right';
+
+export interface DividerBlockProps {
+  thickness: number;
+  lineStyle: BorderStyleOption;
+  color: ColorValue;
+  width: string;
+  height: string;
+  orientation: 'horizontal' | 'vertical';
+  alignment: DividerAlignment;
+  margin: SpacingValue;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
