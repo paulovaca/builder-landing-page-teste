@@ -3,13 +3,10 @@ import type { LucideProps } from 'lucide-react';
 import React, { useMemo } from 'react';
 
 import type {
-  BorderValue,
-  ColorValue,
-  SpacingValue,
-  VisibilityConfig,
+  ButtonBlockProps as ButtonBlockPropsType,
+  TextTransformOption,
+  TextWeightOption,
 } from '@/lib/site-renderer/types';
-import type { TrackingConfig } from '@/lib/tracking/types';
-
 import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 
 export type IconName = keyof typeof LucideIcons;
@@ -23,6 +20,13 @@ export const VARIANT_OPTIONS = [
 export type ButtonVariant = (typeof VARIANT_OPTIONS)[number]['value'];
 
 export type ButtonShadow = 'none' | 'soft' | 'medium' | 'strong';
+
+const BUTTON_FONT_WEIGHT_MAP: Record<TextWeightOption, number> = {
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+};
 
 const alignmentToCssValue: Record<
   'left' | 'center' | 'right',
@@ -43,33 +47,7 @@ const BUTTON_SHADOW_MAP: Record<ButtonShadow, string> = {
   strong: 'var(--shadow-lg)',
 };
 
-export interface ButtonBlockProps {
-  label: string;
-  href: string;
-  openInNewTab: boolean;
-  variant: ButtonVariant;
-  textSize: number;
-  fullWidth: boolean;
-  alignment: 'left' | 'center' | 'right';
-  borderRadius: number;
-  background: ColorValue;
-  textColor: ColorValue;
-  showIcon: boolean;
-  iconName: IconName;
-  border: BorderValue;
-  shadow: ButtonShadow;
-  tracking?: TrackingConfig;
-  innerRef?: React.Ref<HTMLDivElement>;
-  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
-  margin: SpacingValue;
-  padding: SpacingValue;
-  width: string;
-  height: string;
-  visibleOn: VisibilityConfig;
-  id?: string;
-  className?: string;
-}
+export type ButtonBlockProps = ButtonBlockPropsType;
 
 export function ButtonBlock({
   label,
@@ -77,6 +55,10 @@ export function ButtonBlock({
   openInNewTab,
   variant,
   textSize,
+  fontFamily,
+  fontWeight,
+  letterSpacing,
+  textTransform,
   fullWidth,
   alignment,
   borderRadius,
@@ -101,10 +83,16 @@ export function ButtonBlock({
   const backgroundCss = colorValueToCss(background);
   const textColorCss = colorValueToCss(textColor);
   const resolvedTextSize = Math.max(10, Math.min(200, Number(textSize) || 16));
+  const resolvedFontFamily = fontFamily?.trim() || 'var(--font-family-sans)';
+  const resolvedLetterSpacing =
+    typeof letterSpacing === 'number' && Number.isFinite(letterSpacing)
+      ? `${letterSpacing}px`
+      : '0px';
+  const resolvedTransform: TextTransformOption = textTransform ?? ('none' as TextTransformOption);
   const paddingY = Math.max(8, Math.round(resolvedTextSize * 0.6));
   const paddingX = Math.max(paddingY * 2, Math.round(resolvedTextSize * 1.2));
   const iconElement = useMemo(() => {
-    const Component = resolveIcon(iconName);
+    const Component = resolveIcon(iconName as IconName);
     return React.createElement(Component, {
       size: Math.min(32, Math.max(12, Math.round(resolvedTextSize * 0.9))),
     });
@@ -116,7 +104,7 @@ export function ButtonBlock({
       borderRadius,
       padding: `${paddingY}px ${paddingX}px`,
       fontSize: `${resolvedTextSize}px`,
-      fontWeight: 600,
+      fontWeight: BUTTON_FONT_WEIGHT_MAP[fontWeight],
       display: 'inline-flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -128,6 +116,9 @@ export function ButtonBlock({
       border: customBorder !== 'none' ? customBorder : 'none',
       boxShadow: BUTTON_SHADOW_MAP[shadow],
       minHeight: `${Math.max(36, resolvedTextSize + paddingY * 2)}px`,
+      letterSpacing: resolvedLetterSpacing,
+      textTransform: resolvedTransform,
+      fontFamily: resolvedFontFamily,
     };
 
     if (variant === 'outline' && customBorder === 'none') {

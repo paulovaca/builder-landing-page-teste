@@ -2,7 +2,8 @@
 
 import React, { useRef } from 'react';
 
-import { VideoBlock, type VideoBlockProps } from '@/components/site-blocks/VideoBlock';
+import { VideoBlock } from '@/components/site-blocks/VideoBlock';
+import type { VideoBlockProps } from '@/lib/site-renderer/types';
 import { useTracking } from '@/lib/tracking/useTracking';
 
 export type VideoRuntimeProps = VideoBlockProps;

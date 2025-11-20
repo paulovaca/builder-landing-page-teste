@@ -7,17 +7,22 @@ import {
   spacingValueToCss,
 } from '@/components/site-blocks/utils';
 import type {
-  BorderValue,
-  ColorValue,
-  LinkSEOConfig,
-  SpacingValue,
-  VisibilityConfig,
+  LinkBlockProps as LinkBlockPropsType,
+  TextTransformOption,
+  TextWeightOption,
 } from '@/lib/site-renderer/types';
-import type { TrackingConfig } from '@/lib/tracking/types';
 
-export type LinkVariant = 'accent' | 'muted' | 'primary';
-export type LinkUnderline = 'always' | 'hover' | 'none';
-export type LinkShadow = 'none' | 'soft' | 'strong';
+export type LinkBlockProps = LinkBlockPropsType;
+export type LinkVariant = LinkBlockProps['variant'];
+export type LinkUnderline = LinkBlockProps['underline'];
+export type LinkShadow = LinkBlockProps['shadow'];
+
+const LINK_FONT_WEIGHT_MAP: Record<TextWeightOption, number> = {
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+};
 
 export const LINK_VARIANT_STYLES: Record<LinkVariant, React.CSSProperties> = {
   accent: { color: 'var(--color-accent)' },
@@ -43,34 +48,6 @@ const LINK_SHADOW_MAP: Record<LinkShadow, string> = {
   strong: 'var(--shadow-md)',
 };
 
-export interface LinkBlockProps {
-  label: string;
-  href: string;
-  openInNewTab: boolean;
-  variant: LinkVariant;
-  underline: LinkUnderline;
-  showIcon: boolean;
-  textSize: number;
-  alignment: 'left' | 'center' | 'right';
-  iconSize: number;
-  tracking?: TrackingConfig;
-  seo?: LinkSEOConfig;
-  innerRef?: React.Ref<HTMLDivElement>;
-  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
-  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
-  margin: SpacingValue;
-  padding: SpacingValue;
-  background: ColorValue;
-  border: BorderValue;
-  borderRadius: number;
-  shadow: LinkShadow;
-  width: string;
-  height: string;
-  visibleOn: VisibilityConfig;
-  id?: string;
-  className?: string;
-}
-
 export function LinkBlock({
   label,
   href,
@@ -79,6 +56,10 @@ export function LinkBlock({
   underline,
   showIcon,
   textSize,
+  fontFamily,
+  fontWeight,
+  letterSpacing,
+  textTransform,
   alignment,
   iconSize,
   tracking,
@@ -100,6 +81,12 @@ export function LinkBlock({
   const hasLink = Boolean(href && href.trim().length > 0);
 
   const resolvedTextSize = Math.max(10, Math.min(120, Number(textSize) || 16));
+  const resolvedFontFamily = fontFamily?.trim() || 'var(--font-family-sans)';
+  const resolvedLetterSpacing =
+    typeof letterSpacing === 'number' && Number.isFinite(letterSpacing)
+      ? `${letterSpacing}px`
+      : '0px';
+  const resolvedTransform: TextTransformOption = textTransform ?? ('none' as TextTransformOption);
 
   const linkStyle: React.CSSProperties = {
     ...LINK_VARIANT_STYLES[variant],
@@ -109,7 +96,10 @@ export function LinkBlock({
     alignItems: 'center',
     justifyContent: 'center',
     textDecoration: LINK_UNDERLINE_MAP[underline],
-    fontWeight: 500,
+    fontWeight: LINK_FONT_WEIGHT_MAP[fontWeight],
+    fontFamily: resolvedFontFamily,
+    letterSpacing: resolvedLetterSpacing,
+    textTransform: resolvedTransform,
     transition: 'color var(--transition-base)',
     cursor: hasLink ? 'pointer' : 'default',
   };

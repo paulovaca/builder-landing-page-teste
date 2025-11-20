@@ -16,7 +16,7 @@ export default function RootLayout({
       <head>
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=BhuTuka+Expanded+One:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@400;500;600;700&display=swap"
         />
       </head>
       <body>{children}</body>

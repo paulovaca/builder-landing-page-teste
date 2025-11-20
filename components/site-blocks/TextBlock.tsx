@@ -1,41 +1,17 @@
 import React from 'react';
 
 import type {
-  BorderValue,
-  ColorValue,
-  SpacingValue,
-  VisibilityConfig,
+  TextAlignOption,
+  TextBlockProps as TextBlockPropsType,
+  TextTransformOption,
+  TextWeightOption,
 } from '@/lib/site-renderer/types';
 
 import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 
-export type TextVariant = 'body' | 'lead' | 'caption';
-export type TextWeight = 'regular' | 'medium' | 'semibold';
-
-export interface TextBlockProps {
-  text: string;
-  variant: TextVariant;
-  align: 'left' | 'center' | 'right' | 'justify';
-  color: ColorValue;
-  maxWidth: string;
-  padding: SpacingValue;
-  lineHeight: number;
-  fontWeight: TextWeight;
-  textSize: number;
-  innerRef?: React.Ref<HTMLDivElement>;
-  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
-  renderContent?: (text: string) => React.ReactNode;
-  margin: SpacingValue;
-  background: ColorValue;
-  border: BorderValue;
-  borderRadius: number;
-  shadow: 'none' | 'soft';
-  width: string;
-  height: string;
-  visibleOn: VisibilityConfig;
-  id?: string;
-  className?: string;
-}
+export type TextBlockProps = TextBlockPropsType;
+export type TextVariant = TextBlockProps['variant'];
+export type TextWeight = TextWeightOption;
 
 const TEXT_SHADOW_MAP: Record<TextBlockProps['shadow'], string> = {
   none: 'none',
@@ -52,6 +28,7 @@ export const TEXT_FONT_WEIGHT_MAP: Record<TextWeight, number> = {
   regular: 400,
   medium: 500,
   semibold: 600,
+  bold: 700,
 };
 
 export function TextBlock({
@@ -64,6 +41,9 @@ export function TextBlock({
   lineHeight,
   fontWeight,
   textSize,
+  fontFamily,
+  letterSpacing,
+  textTransform,
   innerRef,
   wrapperProps,
   renderContent,
@@ -82,14 +62,23 @@ export function TextBlock({
     typeof textSize === 'number' && !Number.isNaN(textSize)
       ? Math.max(10, Math.min(120, textSize))
       : parseInt(TEXT_VARIANT_STYLES[variant].fontSize, 10);
+  const resolvedFontFamily = fontFamily?.trim() || 'var(--font-family-sans)';
+  const resolvedLetterSpacing =
+    typeof letterSpacing === 'number' && Number.isFinite(letterSpacing)
+      ? `${letterSpacing}px`
+      : '0px';
+  const resolvedTransform: TextTransformOption = textTransform ?? ('none' as TextTransformOption);
 
   const textStyle: React.CSSProperties = {
     margin: 0,
     color: colorValueToCss(color),
-    textAlign: align,
+    textAlign: align as TextAlignOption,
     fontSize: `${resolvedFontSize}px`,
     lineHeight: lineHeight.toString(),
     fontWeight: TEXT_FONT_WEIGHT_MAP[fontWeight],
+    fontFamily: resolvedFontFamily,
+    letterSpacing: resolvedLetterSpacing,
+    textTransform: resolvedTransform,
     maxWidth: maxWidth || '100%',
   };
 

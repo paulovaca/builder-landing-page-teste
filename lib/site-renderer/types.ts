@@ -157,6 +157,10 @@ export interface BadgeBlockProps {
   text: string;
   variant: BadgeVariant;
   textSize: number;
+  fontFamily: string;
+  fontWeight: TextWeightOption;
+  letterSpacing: number;
+  textTransform?: TextTransformOption;
   background: ColorValue;
   textColor: ColorValue;
   borderRadius: number;
@@ -192,7 +196,7 @@ export interface VideoBlockProps {
   showPlayIndicator: boolean;
   shadow: VideoShadow;
   background: ColorValue;
-  tracking?: unknown;
+  tracking?: import('@/lib/tracking/types').TrackingConfig;
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
   onPlay?: () => void;
@@ -240,6 +244,129 @@ export interface ListBlockProps {
   visibleOn: VisibilityConfig;
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
+export interface TextBlockProps {
+  text: string;
+  variant: 'body' | 'lead' | 'caption';
+  align: 'left' | 'center' | 'right' | 'justify';
+  color: ColorValue;
+  fontFamily: string;
+  fontWeight: TextWeightOption;
+  textSize: number;
+  lineHeight: number;
+  letterSpacing: number;
+  textTransform?: TextTransformOption;
+  maxWidth: string;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft';
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  renderContent?: (text: string) => React.ReactNode;
+  id?: string;
+  className?: string;
+}
+
+export interface HeadingBlockProps {
+  text: string;
+  level: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  align: 'left' | 'center' | 'right';
+  color: ColorValue;
+  fontFamily: string;
+  weight: TextWeightOption;
+  fontSize: number;
+  lineHeight?: number;
+  letterSpacing: number;
+  textTransform?: TextTransformOption;
+  uppercase?: boolean;
+  emphasis?: boolean;
+  maxWidth: string;
+  spacingBelow: number;
+  seo?: HeadingSEOConfig;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft' | 'medium';
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
+export interface ButtonBlockProps {
+  label: string;
+  href: string;
+  openInNewTab: boolean;
+  variant: 'solid' | 'outline' | 'ghost';
+  textSize: number;
+  fontFamily: string;
+  fontWeight: TextWeightOption;
+  letterSpacing: number;
+  textTransform?: TextTransformOption;
+  fullWidth: boolean;
+  alignment: 'left' | 'center' | 'right';
+  borderRadius: number;
+  background: ColorValue;
+  textColor: ColorValue;
+  showIcon: boolean;
+  iconName: string;
+  border: BorderValue;
+  shadow: 'none' | 'soft' | 'medium' | 'strong';
+  tracking?: import('@/lib/tracking/types').TrackingConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  id?: string;
+  className?: string;
+}
+
+export interface LinkBlockProps {
+  label: string;
+  href: string;
+  openInNewTab: boolean;
+  variant: 'accent' | 'muted' | 'primary';
+  underline: 'always' | 'hover' | 'none';
+  showIcon: boolean;
+  textSize: number;
+  fontFamily: string;
+  fontWeight: TextWeightOption;
+  letterSpacing: number;
+  textTransform?: TextTransformOption;
+  alignment: 'left' | 'center' | 'right';
+  iconSize: number;
+  tracking?: import('@/lib/tracking/types').TrackingConfig;
+  seo?: LinkSEOConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+  margin: SpacingValue;
+  padding: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft' | 'strong';
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
   id?: string;
   className?: string;
 }

@@ -1,15 +1,30 @@
 import React from 'react';
 
-import type { BadgeBlockProps } from '@/lib/site-renderer/types';
+import type {
+  BadgeBlockProps,
+  TextTransformOption,
+  TextWeightOption,
+} from '@/lib/site-renderer/types';
 
 import { colorValueToCss, spacingValueToCss } from './utils';
 
 const BORDER_RADIUS_DEFAULT = 999;
 
+const BADGE_FONT_WEIGHT_MAP: Record<TextWeightOption, number> = {
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+};
+
 export function BadgeBlock({
   text,
   variant,
   textSize,
+  fontFamily,
+  fontWeight,
+  letterSpacing,
+  textTransform,
   background,
   textColor,
   borderRadius,
@@ -47,6 +62,12 @@ export function BadgeBlock({
     variant === 'soft' && typeof background === 'string'
       ? `color-mix(in srgb, ${baseBackground} 18%, transparent)`
       : baseBackground;
+  const resolvedFontFamily = fontFamily?.trim() || 'var(--font-family-sans)';
+  const resolvedLetterSpacing =
+    typeof letterSpacing === 'number' && Number.isFinite(letterSpacing)
+      ? `${letterSpacing}px`
+      : '0px';
+  const resolvedTransform: TextTransformOption = textTransform ?? ('none' as TextTransformOption);
 
   const badgeStyle: React.CSSProperties = {
     display: 'inline-flex',
@@ -55,8 +76,11 @@ export function BadgeBlock({
     gap: '6px',
     padding: spacingValueToCss(padding ?? defaultPaddingValue),
     fontSize: `${clampedTextSize}px`,
-    fontWeight: 600,
+    fontWeight: BADGE_FONT_WEIGHT_MAP[fontWeight],
     lineHeight: 1.2,
+    fontFamily: resolvedFontFamily,
+    letterSpacing: resolvedLetterSpacing,
+    textTransform: resolvedTransform,
     color: colorValueToCss(textColor),
     borderRadius: borderRadius ?? BORDER_RADIUS_DEFAULT,
     whiteSpace: 'nowrap',

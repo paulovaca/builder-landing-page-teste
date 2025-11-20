@@ -6,43 +6,19 @@ import {
   spacingValueToCss,
 } from '@/components/site-blocks/utils';
 import type {
-  BorderValue,
-  ColorValue,
-  HeadingSEOConfig,
-  SpacingValue,
-  VisibilityConfig,
+  HeadingBlockProps as BaseHeadingBlockProps,
+  TextTransformOption,
+  TextWeightOption,
 } from '@/lib/site-renderer/types';
 
-export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-
-export type HeadingWeight = 'regular' | 'medium' | 'bold';
-
-export type HeadingShadow = 'none' | 'soft' | 'medium';
-
-export interface HeadingBlockProps {
-  text: string;
-  level: HeadingLevel;
-  align: 'left' | 'center' | 'right';
-  color: ColorValue;
-  maxWidth: string;
-  spacingBelow: number;
-  uppercase: boolean;
-  emphasis: boolean;
-  weight: HeadingWeight;
-  fontSize: number;
-  seo?: HeadingSEOConfig;
-  margin: SpacingValue;
-  padding: SpacingValue;
-  background: ColorValue;
-  border: BorderValue;
-  borderRadius: number;
-  shadow: HeadingShadow;
-  width: string;
-  height: string;
-  visibleOn: VisibilityConfig;
-  id?: string;
-  className?: string;
+export interface HeadingBlockProps extends BaseHeadingBlockProps {
+  uppercase?: boolean;
+  emphasis?: boolean;
 }
+
+export type HeadingLevel = HeadingBlockProps['level'];
+export type HeadingWeight = TextWeightOption;
+export type HeadingShadow = 'none' | 'soft' | 'medium';
 
 const LEVEL_STYLES: Record<HeadingLevel, { fontSize: string; lineHeight: number }> = {
   h1: { fontSize: '48px', lineHeight: 1.1 },
@@ -56,6 +32,7 @@ const LEVEL_STYLES: Record<HeadingLevel, { fontSize: string; lineHeight: number 
 const WEIGHT_MAP: Record<HeadingWeight, number> = {
   regular: 500,
   medium: 600,
+  semibold: 600,
   bold: 700,
 };
 
@@ -84,6 +61,10 @@ export function HeadingBlock({
   emphasis,
   weight,
   fontSize,
+  fontFamily,
+  lineHeight,
+  letterSpacing,
+  textTransform,
   renderContent,
   innerRef,
   wrapperProps,
@@ -105,15 +86,17 @@ export function HeadingBlock({
       ? Math.max(14, Math.min(160, fontSize))
       : parseInt(baseTypography.fontSize, 10);
   const resolvedLineHeight =
-    typeof fontSize === 'number' && !Number.isNaN(fontSize)
-      ? Math.max(
-          1,
-          Math.min(
-            2,
-            (baseTypography.lineHeight * resolvedFontSize) / parseInt(baseTypography.fontSize, 10),
-          ),
-        )
+    typeof lineHeight === 'number' && Number.isFinite(lineHeight)
+      ? Math.max(1, Math.min(2.4, lineHeight))
       : baseTypography.lineHeight;
+
+  const resolvedFontFamily = fontFamily?.trim() || 'var(--font-family-sans)';
+  const resolvedLetterSpacing =
+    typeof letterSpacing === 'number' && Number.isFinite(letterSpacing)
+      ? `${letterSpacing}px`
+      : '0px';
+  const resolvedTransform: TextTransformOption =
+    textTransform ?? (uppercase ? 'uppercase' : ('none' as TextTransformOption));
 
   const headingStyle: React.CSSProperties = {
     margin: 0,
@@ -121,10 +104,11 @@ export function HeadingBlock({
     textAlign: align,
     fontSize: `${resolvedFontSize}px`,
     lineHeight: resolvedLineHeight,
+    fontFamily: resolvedFontFamily,
+    letterSpacing: resolvedLetterSpacing,
     maxWidth: maxWidth || '100%',
     fontWeight: WEIGHT_MAP[weight],
-    textTransform: uppercase ? 'uppercase' : undefined,
-    letterSpacing: uppercase ? '0.05em' : undefined,
+    textTransform: resolvedTransform,
     marginBottom: `${spacingBelow}px`,
     position: 'relative',
     display: 'inline-block',

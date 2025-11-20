@@ -1,5 +1,6 @@
 import React from 'react';
 import * as LucideIcons from 'lucide-react';
+import type { LucideProps } from 'lucide-react';
 
 import type { ListBlockProps } from '@/lib/site-renderer/types';
 
@@ -80,8 +81,12 @@ export function ListBlock({
   const markerColorCss = colorValueToCss(markerColor);
   const textColorCss = colorValueToCss(textColor);
   const IconComponent =
-    LucideIcons[markerIcon as keyof typeof LucideIcons] || LucideIcons.CheckCircle2;
-  const CheckIcon = LucideIcons.CheckCircle2 ?? LucideIcons.CheckCircle ?? LucideIcons.Check;
+    (LucideIcons[markerIcon as keyof typeof LucideIcons] as React.ComponentType<LucideProps>) ||
+    (LucideIcons.CheckCircle2 as React.ComponentType<LucideProps>);
+  const CheckIcon =
+    (LucideIcons.CheckCircle2 as React.ComponentType<LucideProps>) ??
+    (LucideIcons.CheckCircle as React.ComponentType<LucideProps>) ??
+    (LucideIcons.Check as React.ComponentType<LucideProps>);
   const ListElement = markerType === 'number' ? 'ol' : 'ul';
 
   const renderMarker = (index: number) => {
