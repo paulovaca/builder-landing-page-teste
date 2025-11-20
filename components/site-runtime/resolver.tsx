@@ -7,6 +7,7 @@ import { HeadingRuntime } from './Heading';
 import { ImageRuntime } from './Image';
 import { IconRuntime } from './Icon';
 import { LinkRuntime } from './Link';
+import { SpacerRuntime } from './Spacer';
 import { TextRuntime } from './Text';
 import { VideoRuntime } from './Video';
 
@@ -20,5 +21,6 @@ export const siteRuntimeResolver = {
   Link: LinkRuntime,
   Card: CardRuntime,
   Video: VideoRuntime,
+  Spacer: SpacerRuntime,
   TestControlsBlock: () => null,
 };

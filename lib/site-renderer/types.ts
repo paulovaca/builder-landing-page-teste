@@ -117,3 +117,19 @@ export interface IconBlockProps {
   id?: string;
   className?: string;
 }
+
+export type SpacerOrientation = 'vertical' | 'horizontal';
+
+export interface SpacerBlockProps {
+  size: number;
+  orientation: SpacerOrientation;
+  showGuide: boolean;
+  margin: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
