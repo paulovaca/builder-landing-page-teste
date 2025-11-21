@@ -13,6 +13,7 @@ import { ListRuntime } from './List';
 import { TextRuntime } from './Text';
 import { VideoRuntime } from './Video';
 import { ImagePlaceholderRuntime } from './ImagePlaceholder';
+import { GridRuntime } from './Grid';
 
 export const siteRuntimeResolver = {
   Container: ContainerRuntime,
@@ -23,6 +24,7 @@ export const siteRuntimeResolver = {
   Link: LinkRuntime,
   Image: ImagePlaceholderRuntime,
   Card: CardRuntime,
+  Grid: GridRuntime,
   Video: VideoRuntime,
   Divider: DividerRuntime,
   Spacer: SpacerRuntime,

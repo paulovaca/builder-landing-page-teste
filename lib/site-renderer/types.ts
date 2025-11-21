@@ -370,3 +370,29 @@ export interface LinkBlockProps {
   id?: string;
   className?: string;
 }
+
+export type GridItemAlignment = 'start' | 'center' | 'end' | 'stretch';
+
+export interface GridBlockProps {
+  columnsDesktop: number;
+  columnsTablet: number;
+  columnsMobile: number;
+  gap: number;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft' | 'medium';
+  justifyItems: GridItemAlignment;
+  alignItems: GridItemAlignment;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  children?: React.ReactNode;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  showEmptyState?: boolean;
+  id?: string;
+  className?: string;
+}
