@@ -396,3 +396,32 @@ export interface GridBlockProps {
   id?: string;
   className?: string;
 }
+
+export type SectionWidthOption = 'narrow' | 'medium' | 'wide' | 'full';
+export type SectionPaddingPreset = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'custom';
+export type SectionContentAlign = 'start' | 'center' | 'end';
+
+export interface SectionBlockProps {
+  contentWidth: SectionWidthOption;
+  padding: SpacingValue;
+  paddingPreset: SectionPaddingPreset;
+  background: ColorValue;
+  backgroundImage?: string;
+  backgroundAlt?: string;
+  overlayColor: ColorValue;
+  overlayOpacity: number;
+  alignContent: SectionContentAlign;
+  margin: SpacingValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft' | 'medium';
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  children?: React.ReactNode;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  showEmptyState?: boolean;
+  id?: string;
+  className?: string;
+}

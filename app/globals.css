@@ -1,12 +1,242 @@
 :root {
-  color-scheme: light;
-  font-family:
-    'Aguafina Script',
+  /* Typography */
+  --font-family-sans: var(
+    --font-inter,
+    var(--font-geist-sans),
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
-    sans-serif;
+    sans-serif
+  );
+  --font-family-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, 'Menlo', 'Monaco', 'Consolas',
+    'Liberation Mono', 'Courier New', monospace;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-md: 13px;
+  --font-size-lg: 14px;
+  --font-size-xl: 16px;
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.4;
+  --line-height-relaxed: 1.6;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* Color palette – base references */
+  --color-bg-page-light: #f5f5f5;
+  --color-bg-page-dark: #1e1e1e;
+  --color-bg-surface-light: #ffffff;
+  --color-bg-surface-dark: #2c2c2c;
+  --color-bg-surface-solid-light: #ffffff;
+  --color-bg-surface-solid-dark: #2c2c2c;
+  --color-bg-subtle-light: #fafafa;
+  --color-bg-subtle-dark: #3c3c3c;
+  --color-bg-overlay-light: rgba(255, 255, 255, 0.98);
+  --color-bg-overlay-dark: rgba(30, 30, 30, 0.96);
+  --color-bg-glass-light: rgba(255, 255, 255, 0.92);
+  --color-bg-glass-dark: rgba(44, 44, 44, 0.92);
+  --color-bg-strong-light: #1b1b1b;
+  --color-bg-strong-dark: #151515;
+  --color-bg-hover-light: #f0f0f0;
+  --color-bg-hover-dark: #3c3c3c;
+  --color-bg-active-light: #e5e5e5;
+  --color-bg-active-dark: #4c4c4c;
+  --color-border-light: #e0e0e0;
+  --color-border-dark: #3c3c3c;
+  --color-border-strong-light: #c0c0c0;
+  --color-border-strong-dark: #5c5c5c;
+  --color-border-subtle-light: #f0f0f0;
+  --color-border-subtle-dark: #2c2c2c;
+  --color-text-primary-light: #1e1e1e;
+  --color-text-primary-dark: #ffffff;
+  --color-text-secondary-light: #6b6b6b;
+  --color-text-secondary-dark: #b3b3b3;
+  --color-text-muted-light: #999999;
+  --color-text-muted-dark: #808080;
+  --color-text-inverse-light: #ffffff;
+  --color-text-inverse-dark: #1e1e1e;
+  --color-accent-light: #0d99ff;
+  --color-accent-dark: #0d99ff;
+  --color-accent-strong-light: #0066cc;
+  --color-accent-strong-dark: #33aaff;
+  --color-accent-hover-light: #0080e6;
+  --color-accent-hover-dark: #0080e6;
+  --color-accent-soft-light: rgba(13, 153, 255, 0.1);
+  --color-accent-soft-dark: rgba(13, 153, 255, 0.15);
+  --color-success-light: #00c853;
+  --color-success-dark: #00c853;
+  --color-success-soft-light: rgba(0, 200, 83, 0.15);
+  --color-success-soft-dark: rgba(0, 200, 83, 0.2);
+  --color-warning-light: #ffb300;
+  --color-warning-dark: #ffb300;
+  --color-warning-soft-light: rgba(255, 179, 0, 0.15);
+  --color-warning-soft-dark: rgba(255, 179, 0, 0.22);
+  --color-danger-light: #ff5252;
+  --color-danger-dark: #ff5252;
+  --color-danger-soft-light: rgba(255, 82, 82, 0.15);
+  --color-danger-soft-dark: rgba(255, 82, 82, 0.22);
+  --color-info-light: #0d99ff;
+  --color-info-dark: #0d99ff;
+
+  /* Color palette – active tokens (default to light) */
+  --color-bg-page: var(--color-bg-page-light);
+  --color-bg-surface: var(--color-bg-surface-light);
+  --color-bg-surface-solid: var(--color-bg-surface-solid-light);
+  --color-bg-subtle: var(--color-bg-subtle-light);
+  --color-bg-overlay: var(--color-bg-overlay-light);
+  --color-bg-glass: var(--color-bg-glass-light);
+  --color-bg-strong: var(--color-bg-strong-light);
+  --color-bg-hover: var(--color-bg-hover-light);
+  --color-bg-active: var(--color-bg-active-light);
+  --color-border: var(--color-border-light);
+  --color-border-strong: var(--color-border-strong-light);
+  --color-border-subtle: var(--color-border-subtle-light);
+  --color-text-primary: var(--color-text-primary-light);
+  --color-text-secondary: var(--color-text-secondary-light);
+  --color-text-muted: var(--color-text-muted-light);
+  --color-text-inverse: var(--color-text-inverse-light);
+  --color-accent: var(--color-accent-light);
+  --color-accent-strong: var(--color-accent-strong-light);
+  --color-accent-hover: var(--color-accent-hover-light);
+  --color-accent-soft: var(--color-accent-soft-light);
+  --color-success: var(--color-success-light);
+  --color-success-soft: var(--color-success-soft-light);
+  --color-warning: var(--color-warning-light);
+  --color-warning-soft: var(--color-warning-soft-light);
+  --color-danger: var(--color-danger-light);
+  --color-danger-soft: var(--color-danger-soft-light);
+  --color-info: var(--color-info-light);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --shadow-panel: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-soft: var(--shadow-md);
+  --shadow-medium: var(--shadow-lg);
+  --shadow-strong: 0 6px 16px rgba(0, 0, 0, 0.16);
+  --shadow-deep: 0 10px 24px rgba(0, 0, 0, 0.18);
+
+  /* Spacing scale */
+  --space-0: 0;
+  --space-1: 2px;
+  --space-2: 4px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 20px;
+  --space-7: 24px;
+  --space-8: 32px;
+  --space-9: 40px;
+  --space-10: 48px;
+  --space-11: 56px;
+  --space-12: 64px;
+  --space-13: 80px;
+
+  /* Legacy spacing aliases (to be migrated to --space-*) */
+  --spacing-0: var(--space-0);
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-5: var(--space-5);
+  --spacing-6: var(--space-6);
+  --spacing-7: var(--space-7);
+  --spacing-8: var(--space-8);
+  --spacing-9: var(--space-9);
+  --spacing-10: var(--space-10);
+  --spacing-11: var(--space-11);
+  --spacing-12: var(--space-12);
+  --spacing-13: var(--space-13);
+  --spacing-2xs: var(--space-1);
+  --spacing-xs: var(--space-2);
+  --spacing-sm: var(--space-3);
+  --spacing-md: var(--space-5);
+  --spacing-lg: var(--space-7);
+  --spacing-xl: var(--space-9);
+
+  /* Sizes & layout */
+  --max-content-width: 1100px;
+
+  /* Radii */
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.32s ease;
+
+  /* Motion */
+  --motion-duration-fast: 140ms;
+  --motion-duration-medium: 220ms;
+  --motion-duration-slow: 360ms;
+  --motion-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --motion-ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Blur */
+  --blur-overlay: 14px;
+  --blur-header: 12px;
+
+  /* Asset manager */
+  --asset-upload-bg: var(--color-bg-surface);
+  --asset-upload-border: var(--color-border);
+  --asset-upload-border-active: var(--color-accent);
+  --asset-card-bg: var(--color-bg-surface);
+  --asset-card-hover: var(--color-bg-subtle);
+  --asset-selected: var(--color-accent-soft);
+  --asset-selected-border: var(--color-accent);
+}
+
+:root[data-theme='dark'] {
+  --color-bg-page: var(--color-bg-page-dark);
+  --color-bg-surface: var(--color-bg-surface-dark);
+  --color-bg-surface-solid: var(--color-bg-surface-solid-dark);
+  --color-bg-subtle: var(--color-bg-subtle-dark);
+  --color-bg-overlay: var(--color-bg-overlay-dark);
+  --color-bg-glass: var(--color-bg-glass-dark);
+  --color-bg-strong: var(--color-bg-strong-dark);
+  --color-bg-hover: var(--color-bg-hover-dark);
+  --color-bg-active: var(--color-bg-active-dark);
+  --color-border: var(--color-border-dark);
+  --color-border-strong: var(--color-border-strong-dark);
+  --color-border-subtle: var(--color-border-subtle-dark);
+  --color-text-primary: var(--color-text-primary-dark);
+  --color-text-secondary: var(--color-text-secondary-dark);
+  --color-text-muted: var(--color-text-muted-dark);
+  --color-text-inverse: var(--color-text-inverse-dark);
+  --color-accent: var(--color-accent-dark);
+  --color-accent-strong: var(--color-accent-strong-dark);
+  --color-accent-hover: var(--color-accent-hover-dark);
+  --color-accent-soft: var(--color-accent-soft-dark);
+  --color-success: var(--color-success-dark);
+  --color-success-soft: var(--color-success-soft-dark);
+  --color-warning: var(--color-warning-dark);
+  --color-warning-soft: var(--color-warning-soft-dark);
+  --color-danger: var(--color-danger-dark);
+  --color-danger-soft: var(--color-danger-soft-dark);
+  --color-info: var(--color-info-dark);
+}
+
+/* Design tokens importados do builder */
+:root {
+  color-scheme: light;
+  font-family:
+    'Aguafina Script',
+    var(
+      --font-family-sans,
+      'Inter',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif
+    );
   background-color: #0f172a;
   color: #0f172a;
 }

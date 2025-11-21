@@ -14,9 +14,11 @@ import { TextRuntime } from './Text';
 import { VideoRuntime } from './Video';
 import { ImagePlaceholderRuntime } from './ImagePlaceholder';
 import { GridRuntime } from './Grid';
+import { SectionRuntime } from './Section';
 
 export const siteRuntimeResolver = {
   Container: ContainerRuntime,
+  Section: SectionRuntime,
   Text: TextRuntime,
   Button: ButtonRuntime,
   Icon: IconRuntime,
