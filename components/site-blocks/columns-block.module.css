@@ -1,0 +1,79 @@
+.columnsWrapper {
+  width: 100%;
+}
+
+.columnsGrid {
+  display: grid;
+  width: 100%;
+  min-height: 120px;
+  gap: var(--column-gap, 32px);
+}
+
+.columnsGrid[data-layout='two'][data-ratio='50-50'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.columnsGrid[data-layout='two'][data-ratio='70-30'] {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.columnsGrid[data-layout='two'][data-ratio='30-70'] {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.columnsGrid[data-layout='three'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.columnsGrid[data-layout='three'][data-ratio='33-33-33'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.columnsGrid[data-mobile-behavior='keep'] {
+  overflow-x: auto;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  min-height: 160px;
+  position: relative;
+  align-items: stretch;
+  transition:
+    background 0.2s ease,
+    border 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.column[data-hidden='true'] {
+  display: none;
+}
+
+.placeholder {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .columnsGrid[data-layout='three'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .columnsGrid[data-mobile-behavior='stack'] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .columnsGrid[data-mobile-behavior='keep'] {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(240px, 1fr);
+    scroll-snap-type: x proximity;
+  }
+
+  .column {
+    scroll-snap-align: start;
+  }
+}

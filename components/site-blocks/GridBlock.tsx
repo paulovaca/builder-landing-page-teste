@@ -1,6 +1,7 @@
 import React from 'react';
 
 import type { GridBlockProps } from '@/lib/site-renderer/types';
+export type { GridBlockProps } from '@/lib/site-renderer/types';
 
 import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 import styles from './grid-block.module.css';
@@ -44,10 +45,13 @@ export function GridBlock({
     alignItems,
     width: width || '100%',
     minHeight: '80px',
-    ['--grid-columns-desktop' as const]: columnsDesktop,
-    ['--grid-columns-tablet' as const]: columnsTablet,
-    ['--grid-columns-mobile' as const]: columnsMobile,
-    ['--grid-gap' as const]: `${gap}px`,
+  };
+
+  const gridCssVars: Record<string, string> = {
+    '--grid-columns-desktop': columnsDesktop.toString(),
+    '--grid-columns-tablet': columnsTablet.toString(),
+    '--grid-columns-mobile': columnsMobile.toString(),
+    '--grid-gap': `${gap}px`,
   };
 
   if (height && height !== 'auto') {
@@ -65,6 +69,7 @@ export function GridBlock({
   const combinedStyle: React.CSSProperties = {
     margin: spacingValueToCss(margin),
     ...gridStyles,
+    ...gridCssVars,
     ...(wrapperStyle ?? {}),
   };
 

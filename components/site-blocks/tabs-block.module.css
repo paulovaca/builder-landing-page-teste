@@ -1,0 +1,77 @@
+.tabsWrapper {
+  width: 100%;
+}
+
+.tabsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg, 24px);
+  width: 100%;
+}
+
+.tabsContainer[data-orientation='vertical'] {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.tabList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tabs-gap, 12px);
+}
+
+.tabList[data-orientation='vertical'] {
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 200px;
+}
+
+.tabButton {
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  transition: all 0.2s ease;
+  position: relative;
+  text-align: center;
+}
+
+.tabButton:focus-visible {
+  outline: 2px solid var(--color-accent, #7c3aed);
+  outline-offset: 2px;
+}
+
+.tabButton[data-variant='line'] {
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+}
+
+.tabButton[data-variant='card'] {
+  border: 1px solid var(--color-border, rgba(15, 23, 42, 0.12));
+}
+
+.tabButton[data-variant='pill'] {
+  border-radius: 999px;
+}
+
+.tabPanels {
+  width: 100%;
+  flex: 1;
+}
+
+.tabPanel {
+  width: 100%;
+}
+
+.tabPanel[data-active='false'] {
+  display: none;
+}
+
+.placeholder {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}

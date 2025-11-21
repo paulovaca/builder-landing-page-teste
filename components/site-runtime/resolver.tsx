@@ -14,7 +14,10 @@ import { TextRuntime } from './Text';
 import { VideoRuntime } from './Video';
 import { ImagePlaceholderRuntime } from './ImagePlaceholder';
 import { GridRuntime } from './Grid';
+import { TabsRuntime } from './Tabs';
 import { SectionRuntime } from './Section';
+import { ColumnsRuntime } from './Columns';
+import { TabPanelCanvasRuntime, ColumnCanvasSlotRuntime } from '@/components/canvas/slot-runtime';
 
 export const siteRuntimeResolver = {
   Container: ContainerRuntime,
@@ -26,6 +29,10 @@ export const siteRuntimeResolver = {
   Link: LinkRuntime,
   Image: ImagePlaceholderRuntime,
   Card: CardRuntime,
+  Tabs: TabsRuntime,
+  TabPanelCanvas: TabPanelCanvasRuntime,
+  Columns: ColumnsRuntime,
+  ColumnCanvasSlot: ColumnCanvasSlotRuntime,
   Grid: GridRuntime,
   Video: VideoRuntime,
   Divider: DividerRuntime,

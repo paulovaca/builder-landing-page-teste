@@ -425,3 +425,89 @@ export interface SectionBlockProps {
   id?: string;
   className?: string;
 }
+
+export type ColumnsLayoutOption = 'two' | 'three';
+export type ColumnsRatioPreset = '50-50' | '70-30' | '30-70' | '33-33-33';
+export type ColumnsMobileBehavior = 'stack' | 'keep';
+export type ColumnsVerticalAlign = 'top' | 'center' | 'bottom';
+
+export interface ColumnsSlotConfig {
+  id: string;
+  title: string;
+}
+
+export interface ColumnsBlockProps {
+  layout: ColumnsLayoutOption;
+  ratio: ColumnsRatioPreset;
+  gap: number;
+  mobileBehavior: ColumnsMobileBehavior;
+  columns: ColumnsSlotConfig[];
+  columnPadding: SpacingValue;
+  columnBackground: ColorValue;
+  columnBorderRadius: number;
+  columnVerticalAlign: ColumnsVerticalAlign;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft' | 'medium';
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  children?: React.ReactNode;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  showEmptyState?: boolean;
+  id?: string;
+  className?: string;
+}
+
+export type TabsVariant = 'line' | 'card' | 'pill';
+export type TabsOrientation = 'horizontal' | 'vertical';
+export type TabsAlignOption = 'start' | 'center' | 'end' | 'stretch';
+
+export interface TabItemConfig {
+  id: string;
+  title: string;
+  icon?: string;
+}
+
+export interface TabsBlockProps {
+  tabs: TabItemConfig[];
+  activeTabId?: string;
+  variant: TabsVariant;
+  orientation: TabsOrientation;
+  alignTabs: TabsAlignOption;
+  tabSpacing: number;
+  tabPadding: SpacingValue;
+  tabFontFamily: string;
+  tabFontWeight: TextWeightOption;
+  tabTextSize: number;
+  tabTextTransform?: TextTransformOption;
+  tabColor: ColorValue;
+  tabActiveColor: ColorValue;
+  tabBackground: ColorValue;
+  tabActiveBackground: ColorValue;
+  tabBorderRadius: number;
+  indicatorColor: ColorValue;
+  contentBackground: ColorValue;
+  contentPadding: SpacingValue;
+  contentBorderRadius: number;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft' | 'medium';
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  children?: React.ReactNode;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  onSelectTab?: (tabId: string) => void;
+  showEmptyState?: boolean;
+  id?: string;
+  className?: string;
+}

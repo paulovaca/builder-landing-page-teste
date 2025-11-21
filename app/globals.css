@@ -227,7 +227,7 @@
 :root {
   color-scheme: light;
   font-family:
-    'BIZ UDMincho',
+    'Inter',
     var(
       --font-family-sans,
       'Inter',

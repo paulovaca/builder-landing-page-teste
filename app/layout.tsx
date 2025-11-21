@@ -16,11 +16,11 @@ export default function RootLayout({
       <head>
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=BIZ+UDMincho:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
         />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
         />
         <link
           rel="stylesheet"
@@ -28,7 +28,7 @@ export default function RootLayout({
         />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Coda+Caption:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One:wght@400;500;600;700&display=swap"
         />
       </head>
       <body>{children}</body>
