@@ -17,7 +17,9 @@ import { GridRuntime } from './Grid';
 import { TabsRuntime } from './Tabs';
 import { SectionRuntime } from './Section';
 import { ColumnsRuntime } from './Columns';
-import { TabPanelCanvasRuntime, ColumnCanvasSlotRuntime } from '@/components/canvas/slot-runtime';
+
+const ColumnCanvasSlotRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+const TabPanelCanvasRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
 
 export const siteRuntimeResolver = {
   Container: ContainerRuntime,
