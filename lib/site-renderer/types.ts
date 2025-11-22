@@ -204,6 +204,101 @@ export interface CalloutBlockProps {
   className?: string;
 }
 
+export type StatAlignment = 'left' | 'center' | 'right';
+export type StatShadow = 'none' | 'soft';
+
+export interface StatBlockProps {
+  value: string;
+  suffix: string;
+  label: string;
+  numberColor: ColorValue;
+  labelColor: ColorValue;
+  numberFontFamily: string;
+  numberFontWeight: TextWeightOption;
+  numberSize: number;
+  numberLineHeight: number;
+  numberLetterSpacing: number;
+  numberTransform?: TextTransformOption;
+  labelFontFamily: string;
+  labelFontWeight: TextWeightOption;
+  labelSize: number;
+  labelLineHeight: number;
+  labelLetterSpacing: number;
+  labelTransform?: TextTransformOption;
+  gap: number;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: StatShadow;
+  textAlign: StatAlignment;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
+export type TimelineOrientation = 'vertical' | 'horizontal';
+export type TimelineShadow = 'none' | 'soft';
+
+export interface TimelineItem {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  iconName?: string;
+}
+
+export interface TimelineBlockProps {
+  items: TimelineItem[];
+  orientation: TimelineOrientation;
+  showIcons: boolean;
+  lineColor: ColorValue;
+  markerColor: ColorValue;
+  background: ColorValue;
+  itemBackground: ColorValue;
+  itemBorder: BorderValue;
+  itemBorderRadius: number;
+  itemPadding: SpacingValue;
+  itemGap: number;
+  contentGap: number;
+  titleColor: ColorValue;
+  descriptionColor: ColorValue;
+  dateColor: ColorValue;
+  titleFontFamily: string;
+  titleFontWeight: TextWeightOption;
+  titleSize: number;
+  titleLineHeight: number;
+  titleLetterSpacing: number;
+  titleTransform?: TextTransformOption;
+  descriptionFontFamily: string;
+  descriptionFontWeight: TextWeightOption;
+  descriptionSize: number;
+  descriptionLineHeight: number;
+  descriptionLetterSpacing: number;
+  descriptionTransform?: TextTransformOption;
+  dateFontFamily: string;
+  dateFontWeight: TextWeightOption;
+  dateSize: number;
+  dateLineHeight: number;
+  dateLetterSpacing: number;
+  dateTransform?: TextTransformOption;
+  shadow: TimelineShadow;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
 export type SpacerOrientation = 'vertical' | 'horizontal';
 
 export interface SpacerBlockProps {
@@ -297,6 +392,39 @@ export interface VideoBlockProps {
   id?: string;
   className?: string;
   disablePlayerInteractions?: boolean;
+}
+
+export type GalleryHoverEffect = 'zoom' | 'darken' | 'lift' | 'none';
+export type GalleryShadow = 'none' | 'soft' | 'medium';
+
+export interface GalleryImageItem {
+  id: string;
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+
+export interface GalleryBlockProps {
+  images: GalleryImageItem[];
+  columns: number;
+  gap: number;
+  borderRadius: number;
+  hoverEffect: GalleryHoverEffect;
+  openInModal: boolean;
+  background: ColorValue;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  border: BorderValue;
+  shadow: GalleryShadow;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  tracking?: import('@/lib/tracking/types').TrackingConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  onImageClick?: (image: GalleryImageItem, index: number) => void;
+  id?: string;
+  className?: string;
 }
 
 export type ListMarkerType = 'bullet' | 'number' | 'icon' | 'check';

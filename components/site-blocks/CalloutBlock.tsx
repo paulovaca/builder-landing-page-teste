@@ -125,6 +125,8 @@ export function CalloutBlock({
   const resolvedDescriptionSpacing = Number.isFinite(descriptionLetterSpacing)
     ? descriptionLetterSpacing
     : 0;
+  const resolvedTitleFont = titleFontFamily?.trim() || 'var(--font-family-sans)';
+  const resolvedDescriptionFont = descriptionFontFamily?.trim() || 'var(--font-family-sans)';
 
   const {
     style: wrapperStyle,
@@ -189,7 +191,7 @@ export function CalloutBlock({
   const titleStyle: React.CSSProperties = {
     margin: 0,
     color: resolvedTitleColor,
-    fontFamily: titleFontFamily?.trim() || 'var(--font-family-sans)',
+    fontFamily: resolvedTitleFont,
     fontWeight: FONT_WEIGHT_MAP[titleFontWeight] ?? 600,
     fontSize: `${resolvedTitleSize}px`,
     lineHeight: resolvedTitleLineHeight.toString(),
@@ -200,7 +202,7 @@ export function CalloutBlock({
   const descriptionStyle: React.CSSProperties = {
     margin: 0,
     color: resolvedDescriptionColor,
-    fontFamily: descriptionFontFamily?.trim() || 'var(--font-family-sans)',
+    fontFamily: resolvedDescriptionFont,
     fontWeight: FONT_WEIGHT_MAP[descriptionFontWeight] ?? 400,
     fontSize: `${resolvedDescriptionSize}px`,
     lineHeight: resolvedDescriptionLineHeight.toString(),

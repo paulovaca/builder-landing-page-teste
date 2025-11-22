@@ -7,6 +7,8 @@ import { HeadingRuntime } from './Heading';
 import { IconRuntime } from './Icon';
 import { IconCardRuntime } from './IconCard';
 import { CalloutRuntime } from './Callout';
+import { StatRuntime } from './Stat';
+import { TimelineRuntime } from './Timeline';
 import { LinkRuntime } from './Link';
 import { DividerRuntime } from './Divider';
 import { SpacerRuntime } from './Spacer';
@@ -20,6 +22,7 @@ import { TabsRuntime } from './Tabs';
 import { SectionRuntime } from './Section';
 import { ColumnsRuntime } from './Columns';
 import { AccordionRuntime } from './Accordion';
+import { GalleryRuntime } from './Gallery';
 
 const ColumnCanvasSlotRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
 const TabPanelCanvasRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
@@ -35,6 +38,8 @@ export const siteRuntimeResolver = {
   Icon: IconRuntime,
   IconCard: IconCardRuntime,
   Callout: CalloutRuntime,
+  Stat: StatRuntime,
+  Timeline: TimelineRuntime,
   Heading: HeadingRuntime,
   Link: LinkRuntime,
   Image: ImagePlaceholderRuntime,
@@ -51,5 +56,6 @@ export const siteRuntimeResolver = {
   List: ListRuntime,
   Accordion: AccordionRuntime,
   AccordionItemCanvas: AccordionItemCanvasRuntime,
+  Gallery: GalleryRuntime,
   TestControlsBlock: () => null,
 };

@@ -5,6 +5,7 @@ export type TrackingBlockType =
   | 'link'
   | 'form'
   | 'video'
+  | 'gallery'
   | 'countdown'
   | 'pricingTable'
   | 'hero'
@@ -34,6 +35,7 @@ export const EVENT_LIBRARY: Record<TrackingBlockType, TrackingEventOption[]> = {
     { value: 'video_progress', label: '⏩ Progresso do vídeo' },
     { value: 'video_complete', label: '✅ Vídeo completo' },
   ],
+  gallery: [{ value: 'view_item', label: '🖼️ Visualizar imagem' }],
   countdown: [
     { value: 'countdown_view', label: '👁️ Visualização' },
     { value: 'countdown_end', label: '⏰ Fim da contagem' },

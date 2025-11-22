@@ -137,6 +137,9 @@ export function IconCardBlock({
     flexShrink: 0,
   };
 
+  const resolvedTitleFont = titleFontFamily?.trim() || 'var(--font-family-sans)';
+  const resolvedDescriptionFont = descriptionFontFamily?.trim() || 'var(--font-family-sans)';
+
   const textContainerStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -150,7 +153,7 @@ export function IconCardBlock({
   const titleStyle: React.CSSProperties = {
     margin: 0,
     color: colorValueToCss(titleColor),
-    fontFamily: titleFontFamily?.trim() || 'var(--font-family-sans)',
+    fontFamily: resolvedTitleFont,
     fontWeight: FONT_WEIGHT_MAP[titleFontWeight] ?? 600,
     fontSize: `${resolvedTitleSize}px`,
     lineHeight: resolvedTitleLineHeight.toString(),
@@ -161,7 +164,7 @@ export function IconCardBlock({
   const descriptionStyle: React.CSSProperties = {
     margin: 0,
     color: colorValueToCss(descriptionColor),
-    fontFamily: descriptionFontFamily?.trim() || 'var(--font-family-sans)',
+    fontFamily: resolvedDescriptionFont,
     fontWeight: FONT_WEIGHT_MAP[descriptionFontWeight] ?? 400,
     fontSize: `${resolvedDescriptionSize}px`,
     lineHeight: resolvedDescriptionLineHeight.toString(),

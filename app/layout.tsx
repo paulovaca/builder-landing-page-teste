@@ -28,6 +28,10 @@ export default function RootLayout({
         />
         <link
           rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Atomic+Age:wght@400;500;600;700&display=swap"
+        />
+        <link
+          rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Grechen+Fuemen:wght@400;500;600;700&display=swap"
         />
         <link
