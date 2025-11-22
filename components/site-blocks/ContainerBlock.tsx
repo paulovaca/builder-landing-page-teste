@@ -69,7 +69,6 @@ export function ContainerBlock({
 }: ContainerBlockProps) {
   const containerStyle: React.CSSProperties = {
     width: width || '100%',
-    maxWidth: '100%',
     maxWidth: centerContent ? maxWidth || '1200px' : '100%',
     display: 'flex',
     flexDirection: direction,

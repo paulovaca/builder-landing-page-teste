@@ -32,6 +32,7 @@ export function BadgeBlock({
   margin,
   width,
   height,
+  alignment,
   visibleOn,
   innerRef,
   wrapperProps,
@@ -104,7 +105,7 @@ export function BadgeBlock({
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: alignment ?? 'flex-start',
         margin: spacingValueToCss(margin),
         width: width && width.trim() !== '' ? width : 'auto',
         height: height && height.trim() !== '' ? height : 'auto',

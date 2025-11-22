@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   icons: [
     {
       rel: 'icon',
-      url: 'https://pub-da297c2772894ddb803d91c4dbd610ad.r2.dev/cmhuwrvln0000txygnhcylbgg/07e4dda0-0849-4629-bcd4-e3a172b185bf.jpg',
+      url: 'https://pub-da297c2772894ddb803d91c4dbd610ad.r2.dev/cmhuwrvln0000txygnhcylbgg/0c684c85-8430-4938-a673-9644765a3985.jpg',
     },
   ],
   openGraph: {

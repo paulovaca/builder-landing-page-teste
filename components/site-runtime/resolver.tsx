@@ -5,6 +5,7 @@ import { CardRuntime } from './Card';
 import { ContainerRuntime } from './Container';
 import { HeadingRuntime } from './Heading';
 import { IconRuntime } from './Icon';
+import { IconCardRuntime } from './IconCard';
 import { LinkRuntime } from './Link';
 import { DividerRuntime } from './Divider';
 import { SpacerRuntime } from './Spacer';
@@ -31,6 +32,7 @@ export const siteRuntimeResolver = {
   Text: TextRuntime,
   Button: ButtonRuntime,
   Icon: IconRuntime,
+  IconCard: IconCardRuntime,
   Heading: HeadingRuntime,
   Link: LinkRuntime,
   Image: ImagePlaceholderRuntime,

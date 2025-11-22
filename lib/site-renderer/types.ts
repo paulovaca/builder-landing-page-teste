@@ -116,6 +116,48 @@ export interface IconBlockProps {
   className?: string;
 }
 
+export type IconCardIconPosition = 'top' | 'left';
+export type IconCardShadow = 'none' | 'soft' | 'medium';
+
+export interface IconCardBlockProps {
+  iconName: string;
+  iconSize: number;
+  iconColor: ColorValue;
+  iconPosition: IconCardIconPosition;
+  contentGap: number;
+  textGap: number;
+  title: string;
+  description: string;
+  titleColor: ColorValue;
+  descriptionColor: ColorValue;
+  titleFontFamily: string;
+  titleFontWeight: TextWeightOption;
+  titleSize: number;
+  titleLineHeight: number;
+  titleLetterSpacing: number;
+  titleTransform?: TextTransformOption;
+  descriptionFontFamily: string;
+  descriptionFontWeight: TextWeightOption;
+  descriptionSize: number;
+  descriptionLineHeight: number;
+  descriptionLetterSpacing: number;
+  descriptionTransform?: TextTransformOption;
+  textAlign: TextAlignOption;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: IconCardShadow;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
 export type SpacerOrientation = 'vertical' | 'horizontal';
 
 export interface SpacerBlockProps {
@@ -168,6 +210,7 @@ export interface BadgeBlockProps {
   margin: SpacingValue;
   width: string;
   height: string;
+  alignment: 'flex-start' | 'center' | 'flex-end';
   visibleOn: VisibilityConfig;
   innerRef?: React.Ref<HTMLDivElement>;
   wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
