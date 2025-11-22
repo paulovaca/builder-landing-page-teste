@@ -6,6 +6,7 @@ import { ContainerRuntime } from './Container';
 import { HeadingRuntime } from './Heading';
 import { IconRuntime } from './Icon';
 import { IconCardRuntime } from './IconCard';
+import { CalloutRuntime } from './Callout';
 import { LinkRuntime } from './Link';
 import { DividerRuntime } from './Divider';
 import { SpacerRuntime } from './Spacer';
@@ -33,6 +34,7 @@ export const siteRuntimeResolver = {
   Button: ButtonRuntime,
   Icon: IconRuntime,
   IconCard: IconCardRuntime,
+  Callout: CalloutRuntime,
   Heading: HeadingRuntime,
   Link: LinkRuntime,
   Image: ImagePlaceholderRuntime,

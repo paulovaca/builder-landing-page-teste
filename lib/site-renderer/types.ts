@@ -158,6 +158,52 @@ export interface IconCardBlockProps {
   className?: string;
 }
 
+export type CalloutTone = 'info' | 'success' | 'warning' | 'danger';
+export type CalloutShadow = 'none' | 'soft';
+
+export interface CalloutBlockProps {
+  tone: CalloutTone;
+  title: string;
+  description: string;
+  showIcon: boolean;
+  iconName: string;
+  iconColor: ColorValue;
+  iconSize: number;
+  background: ColorValue;
+  titleColor: ColorValue;
+  descriptionColor: ColorValue;
+  textAlign: TextAlignOption;
+  titleFontFamily: string;
+  titleFontWeight: TextWeightOption;
+  titleSize: number;
+  titleLineHeight: number;
+  titleLetterSpacing: number;
+  titleTransform?: TextTransformOption;
+  descriptionFontFamily: string;
+  descriptionFontWeight: TextWeightOption;
+  descriptionSize: number;
+  descriptionLineHeight: number;
+  descriptionLetterSpacing: number;
+  descriptionTransform?: TextTransformOption;
+  showAccent: boolean;
+  accentColor: ColorValue;
+  accentWidth: number;
+  contentGap: number;
+  textGap: number;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: CalloutShadow;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
 export type SpacerOrientation = 'vertical' | 'horizontal';
 
 export interface SpacerBlockProps {

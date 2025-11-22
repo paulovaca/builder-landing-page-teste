@@ -11,6 +11,7 @@ export { LinkRuntime } from './Link';
 export { ImagePlaceholderRuntime } from './ImagePlaceholder';
 export { IconRuntime } from './Icon';
 export { IconCardRuntime } from './IconCard';
+export { CalloutRuntime } from './Callout';
 export { VideoRuntime } from './Video';
 export { ListRuntime } from './List';
 export { CraftRenderer } from './CraftRenderer';
