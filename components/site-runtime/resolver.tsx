@@ -17,9 +17,13 @@ import { GridRuntime } from './Grid';
 import { TabsRuntime } from './Tabs';
 import { SectionRuntime } from './Section';
 import { ColumnsRuntime } from './Columns';
+import { AccordionRuntime } from './Accordion';
 
 const ColumnCanvasSlotRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
 const TabPanelCanvasRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
+const AccordionItemCanvasRuntime = ({ children }: { children?: React.ReactNode }) => (
+  <>{children}</>
+);
 
 export const siteRuntimeResolver = {
   Container: ContainerRuntime,
@@ -41,5 +45,7 @@ export const siteRuntimeResolver = {
   Spacer: SpacerRuntime,
   Badge: BadgeRuntime,
   List: ListRuntime,
+  Accordion: AccordionRuntime,
+  AccordionItemCanvas: AccordionItemCanvasRuntime,
   TestControlsBlock: () => null,
 };

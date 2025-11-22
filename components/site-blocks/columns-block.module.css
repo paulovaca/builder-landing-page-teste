@@ -7,6 +7,8 @@
   width: 100%;
   min-height: 120px;
   gap: var(--column-gap, 32px);
+  container-type: inline-size;
+  container-name: columns-grid;
 }
 
 .columnsGrid[data-layout='two'][data-ratio='50-50'] {
@@ -63,6 +65,44 @@
 }
 
 @media (max-width: 768px) {
+  .columnsGrid[data-mobile-behavior='stack'] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .columnsGrid[data-mobile-behavior='keep'] {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(240px, 1fr);
+    scroll-snap-type: x proximity;
+  }
+
+  .column {
+    scroll-snap-align: start;
+  }
+}
+
+/* Artboard device switch (editor chrome uses data-device) */
+:global([data-device='tablet']) .columnsGrid[data-layout='three'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+:global([data-device='mobile']) .columnsGrid[data-mobile-behavior='stack'] {
+  grid-template-columns: 1fr !important;
+}
+
+:global([data-device='mobile']) .columnsGrid[data-mobile-behavior='keep'] {
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 1fr);
+  scroll-snap-type: x proximity;
+}
+
+/* Container queries to mirror device behavior when viewport is wide */
+@container columns-grid (max-width: 1024px) {
+  .columnsGrid[data-layout='three'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container columns-grid (max-width: 768px) {
   .columnsGrid[data-mobile-behavior='stack'] {
     grid-template-columns: 1fr !important;
   }

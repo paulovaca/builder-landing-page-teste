@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import type { VideoBlockProps } from '@/lib/site-renderer/types';
 import { borderValueToCss, colorValueToCss, spacingValueToCss } from './utils';
 import { getYouTubeEmbedUrl } from '@/lib/embed/youtube';
+import styles from './video-block.module.css';
 
 export type VideoShadow = 'none' | 'soft';
 
@@ -78,6 +79,14 @@ export function VideoBlock({
   disablePlayerInteractions = false,
 }: VideoBlockProps) {
   const resolvedUrl = url || DEFAULT_VIDEO_URL;
+  const resolvedPlayerHeightValue =
+    typeof playerHeight === 'number'
+      ? `${playerHeight}px`
+      : typeof playerHeight === 'string'
+        ? playerHeight.trim()
+        : '';
+  const hasExplicitHeight =
+    resolvedPlayerHeightValue !== '' && resolvedPlayerHeightValue.toLowerCase() !== 'auto';
   const {
     style: wrapperStyle,
     className: wrapperClassName,
@@ -85,28 +94,26 @@ export function VideoBlock({
     ...restWrapperProps
   } = wrapperProps ?? {};
 
-  const resolvedPlayerHeight =
-    playerHeight && playerHeight.trim() !== ''
-      ? playerHeight
-      : height && height.trim() !== ''
-        ? height
-        : 'auto';
   const resolvedAspectRatio = playerAspectRatio?.trim() || '16/9';
-  const [ratioW, ratioH] = resolvedAspectRatio.split('/').map((p) => Number(p.trim()) || 0);
+  const resolvedPlayerHeight = hasExplicitHeight ? resolvedPlayerHeightValue : undefined;
+  const [ratioW, ratioH] = resolvedAspectRatio.split('/').map((part) => Number(part.trim()) || 0);
   const aspectRatioNumber = ratioW > 0 && ratioH > 0 ? ratioW / ratioH : 16 / 9;
-  const numericPlayerHeight = parseFloat(
-    typeof resolvedPlayerHeight === 'string' ? resolvedPlayerHeight : '0',
-  );
-  const computedPlayerWidth =
-    resolvedPlayerHeight !== 'auto' && Number.isFinite(numericPlayerHeight)
-      ? `${Math.round(numericPlayerHeight * aspectRatioNumber)}px`
+  const numericHeight = hasExplicitHeight ? parseFloat(resolvedPlayerHeightValue) : undefined;
+  const widthFromHeight =
+    hasExplicitHeight && Number.isFinite(numericHeight)
+      ? `${Math.round((numericHeight as number) * aspectRatioNumber)}px`
       : '100%';
-
-  const resolvedContainerWidth =
-    width && width.trim() !== '' && width.trim() !== 'auto' ? width : computedPlayerWidth;
+  const baseWidth = width?.trim();
+  const responsiveWidth =
+    baseWidth && baseWidth !== 'auto'
+      ? baseWidth.endsWith('%')
+        ? baseWidth
+        : `min(100%, ${baseWidth})`
+      : `min(100%, ${widthFromHeight})`;
 
   const containerStyle: React.CSSProperties = {
-    width: resolvedContainerWidth,
+    width: responsiveWidth,
+    maxWidth: '100%',
     display: 'flex',
     justifyContent: 'center',
     margin: spacingValueToCss(margin),
@@ -119,13 +126,17 @@ export function VideoBlock({
   };
 
   const playerStyle: React.CSSProperties = {
-    width: computedPlayerWidth,
-    height: resolvedPlayerHeight,
+    width: '100%',
     maxWidth: '100%',
     borderRadius,
     overflow: 'hidden',
     position: 'relative',
     background: colorValueToCss(background),
+    aspectRatio: resolvedAspectRatio,
+    // Expose height/aspect as CSS vars to allow responsive caps via CSS/container queries
+    ['--video-player-height' as string]: resolvedPlayerHeight ?? 'auto',
+    ['--video-aspect-ratio' as string]: resolvedAspectRatio,
+    ['--video-player-max-width' as string]: responsiveWidth,
   };
   if (height && height !== 'auto') {
     containerStyle.height = height;
@@ -159,7 +170,7 @@ export function VideoBlock({
       className={combinedClassName}
       {...restWrapperProps}
     >
-      <div style={playerStyle}>
+      <div className={styles.player} style={playerStyle}>
         {isEmbed ? (
           <iframe
             src={embedUrl}

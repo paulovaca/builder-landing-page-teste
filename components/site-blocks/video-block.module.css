@@ -1,0 +1,32 @@
+.player {
+  width: var(--video-player-max-width, 100%);
+  max-width: 100%;
+  height: var(--video-player-height, auto);
+  aspect-ratio: var(--video-aspect-ratio, 16 / 9);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Clamp heights when editor is in device preview (artboard data-device) */
+:global([data-device='tablet']) .player {
+  max-height: min(60vh, 480px);
+}
+
+:global([data-device='mobile']) .player {
+  max-height: min(50vh, 360px);
+}
+
+/* Container queries to mirror device behavior when viewport doesn't shrink */
+@container (max-width: 1024px) {
+  .player {
+    max-height: min(60vh, 480px);
+  }
+}
+
+@container (max-width: 768px) {
+  .player {
+    max-height: min(50vh, 360px);
+  }
+}

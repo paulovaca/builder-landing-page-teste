@@ -69,6 +69,7 @@ export function ContainerBlock({
 }: ContainerBlockProps) {
   const containerStyle: React.CSSProperties = {
     width: width || '100%',
+    maxWidth: '100%',
     maxWidth: centerContent ? maxWidth || '1200px' : '100%',
     display: 'flex',
     flexDirection: direction,
@@ -82,6 +83,9 @@ export function ContainerBlock({
     alignItems: alignVertical,
     justifyContent: alignHorizontal,
     minHeight: '80px',
+    boxSizing: 'border-box',
+    overflow: 'hidden',
+    minWidth: 0,
   };
 
   if (height && height !== 'auto') {

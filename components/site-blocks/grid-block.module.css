@@ -4,6 +4,8 @@
   min-height: 80px;
   grid-template-columns: repeat(var(--grid-columns-desktop, 3), minmax(0, 1fr));
   gap: var(--grid-gap, 24px);
+  container-type: inline-size;
+  container-name: grid-block;
 }
 
 @media (max-width: 1024px) {
@@ -22,4 +24,38 @@
       minmax(0, 1fr)
     );
   }
+}
+
+/* Align responsive behavior with artboard/device width (container queries) */
+@container grid-block (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--grid-columns-tablet, var(--grid-columns-desktop, 3)),
+      minmax(0, 1fr)
+    );
+  }
+}
+
+@container grid-block (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(
+      var(--grid-columns-mobile, var(--grid-columns-tablet, 2)),
+      minmax(0, 1fr)
+    );
+  }
+}
+
+/* When the editor chrome toggles device previews (data-device no viewport shrink) */
+:global([data-device='tablet']) .grid {
+  grid-template-columns: repeat(
+    var(--grid-columns-tablet, var(--grid-columns-desktop, 3)),
+    minmax(0, 1fr)
+  );
+}
+
+:global([data-device='mobile']) .grid {
+  grid-template-columns: repeat(
+    var(--grid-columns-mobile, var(--grid-columns-tablet, 2)),
+    minmax(0, 1fr)
+  );
 }

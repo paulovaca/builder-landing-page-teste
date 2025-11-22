@@ -511,3 +511,48 @@ export interface TabsBlockProps {
   id?: string;
   className?: string;
 }
+
+export type AccordionIconType = 'chevron' | 'plus' | 'arrow';
+
+export interface AccordionItemConfig {
+  id: string;
+  title: string;
+}
+
+export interface AccordionBlockProps {
+  items: AccordionItemConfig[];
+  openItems: string[];
+  allowMultipleOpen: boolean;
+  iconType: AccordionIconType;
+  itemGap: number;
+  headerBackground: ColorValue;
+  headerTextColor: ColorValue;
+  headerFontFamily: string;
+  headerFontWeight: TextWeightOption;
+  headerTextSize: number;
+  headerLineHeight: number;
+  headerLetterSpacing: number;
+  headerTextTransform?: TextTransformOption;
+  headerTextAlign: TextAlignOption;
+  headerPadding: SpacingValue;
+  itemBorderRadius: number;
+  contentBackground: ColorValue;
+  contentTextColor: ColorValue;
+  contentPadding: SpacingValue;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft' | 'medium';
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  children?: React.ReactNode;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  onToggleItem?: (itemId: string, isOpen: boolean) => void;
+  showEmptyState?: boolean;
+  id?: string;
+  className?: string;
+}
