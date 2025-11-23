@@ -17,4 +17,6 @@ export { TimelineRuntime } from './Timeline';
 export { VideoRuntime } from './Video';
 export { ListRuntime } from './List';
 export { GalleryRuntime } from './Gallery';
+export { AvatarRuntime } from './Avatar';
+export { ImageOverlayRuntime } from './ImageOverlay';
 export { CraftRenderer } from './CraftRenderer';

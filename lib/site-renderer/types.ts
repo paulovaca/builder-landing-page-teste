@@ -427,6 +427,62 @@ export interface GalleryBlockProps {
   className?: string;
 }
 
+export type OverlayHorizontalAlign = 'flex-start' | 'center' | 'flex-end';
+export type OverlayVerticalAlign = 'flex-start' | 'center' | 'flex-end';
+
+export interface ImageOverlayBlockProps {
+  imageSrc: string;
+  imageAlt?: string;
+  overlayColor: ColorValue;
+  overlayOpacity: number;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: 'none' | 'soft' | 'medium';
+  minHeight: string;
+  width: string;
+  height: string;
+  contentMaxWidth: string;
+  contentHorizontalAlign: OverlayHorizontalAlign;
+  contentVerticalAlign: OverlayVerticalAlign;
+  visibleOn: VisibilityConfig;
+  children?: React.ReactNode;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  showEmptyState?: boolean;
+  id?: string;
+  className?: string;
+}
+
+export type AvatarSizeOption = 'sm' | 'md' | 'lg' | 'xl';
+
+export interface AvatarBlockProps {
+  src?: string;
+  alt?: string;
+  initials?: string;
+  size: AvatarSizeOption;
+  background: ColorValue;
+  textColor: ColorValue;
+  fontFamily: string;
+  fontWeight: TextWeightOption;
+  fontSize: number;
+  letterSpacing: number;
+  textTransform?: TextTransformOption;
+  showBorder: boolean;
+  border: BorderValue;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  width: string;
+  height: string;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
 export type ListMarkerType = 'bullet' | 'number' | 'icon' | 'check';
 
 export type ListShadow = 'none' | 'soft' | 'medium';

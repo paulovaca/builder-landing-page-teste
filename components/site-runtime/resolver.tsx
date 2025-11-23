@@ -23,6 +23,8 @@ import { SectionRuntime } from './Section';
 import { ColumnsRuntime } from './Columns';
 import { AccordionRuntime } from './Accordion';
 import { GalleryRuntime } from './Gallery';
+import { AvatarRuntime } from './Avatar';
+import { ImageOverlayRuntime } from './ImageOverlay';
 
 const ColumnCanvasSlotRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
 const TabPanelCanvasRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
@@ -57,5 +59,7 @@ export const siteRuntimeResolver = {
   Accordion: AccordionRuntime,
   AccordionItemCanvas: AccordionItemCanvasRuntime,
   Gallery: GalleryRuntime,
+  Avatar: AvatarRuntime,
+  ImageOverlay: ImageOverlayRuntime,
   TestControlsBlock: () => null,
 };
