@@ -108,33 +108,35 @@ export function ImageOverlayBlock({
       id={sanitizedId}
       {...restWrapperProps}
     >
-      {hasImage ? (
-        // eslint-disable-next-line @next/next/no-img-element -- renderização controlada pelo builder
-        <img
-          src={imageSrc}
-          alt={imageAlt?.trim() || 'Imagem com sobreposição'}
-          className={styles.media}
-          loading="lazy"
-          decoding="async"
-        />
-      ) : (
-        <div className={styles.fallback} aria-label="Área de imagem vazia">
-          <span>Envie uma imagem de fundo</span>
-        </div>
-      )}
+      <div className={styles.inner}>
+        {hasImage ? (
+          // eslint-disable-next-line @next/next/no-img-element -- renderização controlada pelo builder
+          <img
+            src={imageSrc}
+            alt={imageAlt?.trim() || 'Imagem com sobreposição'}
+            className={styles.media}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className={styles.fallback} aria-label="Área de imagem vazia">
+            <span>Envie uma imagem de fundo</span>
+          </div>
+        )}
 
-      {resolvedOpacity > 0 ? (
-        <div className={styles.overlay} style={overlayStyle} aria-hidden />
-      ) : null}
+        {resolvedOpacity > 0 ? (
+          <div className={styles.overlay} style={overlayStyle} aria-hidden />
+        ) : null}
 
-      <div className={styles.content} style={contentWrapperStyle}>
-        <div className={styles.contentInner} style={contentInnerStyle}>
-          {children ||
-            (showEmptyState ? (
-              <p className={styles.placeholder}>
-                Arraste textos, botões ou outros blocos para sobrepor a imagem.
-              </p>
-            ) : null)}
+        <div className={styles.content} style={contentWrapperStyle}>
+          <div className={styles.contentInner} style={contentInnerStyle}>
+            {children ||
+              (showEmptyState ? (
+                <p className={styles.placeholder}>
+                  Arraste textos, botões ou outros blocos para sobrepor a imagem.
+                </p>
+              ) : null)}
+          </div>
         </div>
       </div>
     </div>

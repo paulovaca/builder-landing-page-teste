@@ -456,6 +456,30 @@ export interface ImageOverlayBlockProps {
   className?: string;
 }
 
+export type MapTypeOption = 'roadmap' | 'satellite' | 'hybrid';
+export type MapShadowOption = 'none' | 'soft' | 'medium';
+
+export interface MapBlockProps {
+  location: string;
+  mapType: MapTypeOption;
+  zoom: number;
+  showControls: boolean;
+  disableInteractions?: boolean;
+  width: string;
+  height: string;
+  padding: SpacingValue;
+  margin: SpacingValue;
+  background: ColorValue;
+  border: BorderValue;
+  borderRadius: number;
+  shadow: MapShadowOption;
+  visibleOn: VisibilityConfig;
+  innerRef?: React.Ref<HTMLDivElement>;
+  wrapperProps?: React.HTMLAttributes<HTMLDivElement>;
+  id?: string;
+  className?: string;
+}
+
 export type AvatarSizeOption = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface AvatarBlockProps {

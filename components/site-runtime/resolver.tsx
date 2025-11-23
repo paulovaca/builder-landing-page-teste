@@ -25,6 +25,7 @@ import { AccordionRuntime } from './Accordion';
 import { GalleryRuntime } from './Gallery';
 import { AvatarRuntime } from './Avatar';
 import { ImageOverlayRuntime } from './ImageOverlay';
+import { MapRuntime } from './Map';
 
 const ColumnCanvasSlotRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
 const TabPanelCanvasRuntime = ({ children }: { children?: React.ReactNode }) => <>{children}</>;
@@ -61,5 +62,6 @@ export const siteRuntimeResolver = {
   Gallery: GalleryRuntime,
   Avatar: AvatarRuntime,
   ImageOverlay: ImageOverlayRuntime,
+  Map: MapRuntime,
   TestControlsBlock: () => null,
 };

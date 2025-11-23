@@ -19,4 +19,5 @@ export { ListRuntime } from './List';
 export { GalleryRuntime } from './Gallery';
 export { AvatarRuntime } from './Avatar';
 export { ImageOverlayRuntime } from './ImageOverlay';
+export { MapRuntime } from './Map';
 export { CraftRenderer } from './CraftRenderer';
